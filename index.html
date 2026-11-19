@@ -23,70 +23,69 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
-    body { background: var(--bg); color: var(--text); line-height: 1.5; padding: 18px; }
+    body { background: var(--bg); color: var(--text); line-height: 1.5; padding: 20px; }
     .container { max-width: 1120px; margin: 0 auto; }
 
     header {
       display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
-      gap: 14px; background: var(--surface); padding: 16px 22px; border-radius: var(--radius);
-      border: 1px solid var(--border); margin-bottom: 20px;
+      gap: 16px; background: var(--surface); padding: 18px 24px; border-radius: var(--radius);
+      border: 1px solid var(--border); margin-bottom: 24px;
     }
     .brand { display: flex; align-items: center; gap: 12px; }
     .logo-badge {
       width: 42px; height: 42px; border-radius: 10px; background: var(--primary);
       color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 20px;
     }
-    .brand h2 { font-size: 1.2rem; }
+    .brand h2 { font-size: 1.2rem; color: var(--text); }
     .brand p { font-size: 0.85rem; color: var(--muted); }
-    .header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-
+    .header-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
     .pill {
-      padding: 6px 12px; border-radius: 999px; font-size: 0.78rem; font-weight: 700;
+      padding: 6px 12px; border-radius: 999px; font-size: 0.8rem; font-weight: 600;
       background: var(--success-bg); color: var(--success-text);
     }
+    .pill.warn { background: var(--warn-bg); color: var(--warn-text); }
     .pill.closed { background: var(--danger-bg); color: var(--danger); }
-    .pill.cloud-off { background: var(--warn-bg); color: var(--warn-text); }
 
     .hero {
       background: linear-gradient(135deg, #0f766e, #0d9488); color: #fff;
-      padding: 24px 28px; border-radius: var(--radius); margin-bottom: 22px;
+      padding: 28px; border-radius: var(--radius); margin-bottom: 24px;
     }
-    .hero h1 { font-size: 1.7rem; margin-bottom: 6px; }
-    .hero p { opacity: 0.95; max-width: 720px; font-size: 0.95rem; }
+    .hero h1 { font-size: 1.8rem; margin-bottom: 8px; }
+    .hero p { opacity: 0.95; max-width: 720px; font-size: 0.98rem; }
 
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-bottom: 22px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
     @media (max-width: 840px) { .grid { grid-template-columns: 1fr; } }
 
     .card {
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 22px;
+      border-radius: var(--radius); padding: 24px;
     }
-    .eyebrow { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--primary); font-weight: 700; }
-    .card h2 { font-size: 1.2rem; margin-top: 2px; }
+    .card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+    .eyebrow { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary); font-weight: 700; }
+    .card h2 { font-size: 1.25rem; margin-top: 2px; }
 
-    .meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 16px; font-size: 0.85rem; }
-    .meta-tag { background: var(--bg); padding: 5px 10px; border-radius: 8px; border: 1px solid var(--border); font-weight: 600; }
+    .meta-row {
+      display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 18px;
+      font-size: 0.88rem;
+    }
+    .meta-tag { background: var(--bg); padding: 5px 10px; border-radius: 8px; border: 1px solid var(--border); font-weight: 600; color: var(--text); }
 
     .qr-wrapper {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       background: var(--bg); border: 1px dashed #cbd5e1; border-radius: 12px;
-      padding: 18px; margin-bottom: 16px; text-align: center;
+      padding: 20px; margin-bottom: 16px; text-align: center;
     }
-    #qrCanvas {
-      background: #fff; padding: 10px; border-radius: 10px;
-      border: 1px solid var(--border); margin-bottom: 10px;
-      width: 210px; height: 210px; image-rendering: pixelated;
+    #qrBox {
+      background: #fff; padding: 14px; border-radius: 12px; margin-bottom: 12px;
+      border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center;
+      min-width: 210px; min-height: 210px;
     }
-    .timer-text { font-size: 0.82rem; color: var(--muted); font-weight: 600; margin-top: 4px; }
-    .scan-url-box {
-      font-size: 0.74rem; color: var(--muted); word-break: break-all;
-      background: #fff; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border);
-      margin-top: 8px; max-width: 100%;
-    }
+    #qrBox svg, #qrBox canvas { display: block; width: 184px; height: 184px; }
+    .timer-text { font-size: 0.84rem; color: var(--muted); font-weight: 600; margin-top: 4px; }
 
     .btn-group { display: flex; flex-wrap: wrap; gap: 8px; }
     button {
-      cursor: pointer; border: none; border-radius: 9px; padding: 9px 14px;
+      cursor: pointer; border: none; border-radius: 9px; padding: 10px 14px;
       font-size: 0.88rem; font-weight: 600; transition: 0.15s ease;
     }
     .btn-primary { background: var(--primary); color: #fff; }
@@ -97,41 +96,44 @@
     .btn-danger:hover { background: #fecaca; }
     button:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    .form-group { margin-bottom: 13px; }
-    label { display: block; font-size: 0.84rem; font-weight: 600; margin-bottom: 4px; }
+    .form-group { margin-bottom: 14px; }
+    label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; }
     input, select, textarea {
-      width: 100%; padding: 10px 12px; border: 1px solid var(--border);
-      border-radius: 9px; font-size: 0.94rem; outline: none; font-family: inherit;
+      width: 100%; padding: 11px 12px; border: 1px solid var(--border);
+      border-radius: 9px; font-size: 0.95rem; outline: none;
     }
     input:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12); }
-    .hint { font-size: 0.78rem; color: var(--muted); margin-top: 3px; }
+    .hint { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
 
     .alert {
-      padding: 10px 13px; border-radius: 9px; font-size: 0.86rem; margin-top: 12px; display: none; font-weight: 500;
+      padding: 11px 14px; border-radius: 9px; font-size: 0.88rem; margin-top: 14px; display: none; font-weight: 500;
     }
     .alert.error { display: block; background: var(--danger-bg); color: var(--danger); }
     .alert.success { display: block; background: var(--success-bg); color: var(--success-text); }
     .alert.info { display: block; background: var(--warn-bg); color: var(--warn-text); }
 
-    .toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 16px; }
     .search-box { max-width: 240px; }
     .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-    th, td { text-align: left; padding: 11px 12px; border-bottom: 1px solid var(--border); }
-    th { background: var(--bg); font-weight: 700; color: var(--muted); font-size: 0.76rem; text-transform: uppercase; }
-    .badge { padding: 3px 9px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th, td { text-align: left; padding: 12px; border-bottom: 1px solid var(--border); }
+    th { background: var(--bg); font-weight: 700; color: var(--muted); font-size: 0.8rem; text-transform: uppercase; }
+    .badge { padding: 3px 9px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; }
     .badge-present { background: var(--success-bg); color: var(--success-text); }
     .badge-late { background: var(--warn-bg); color: var(--warn-text); }
     .badge-absent { background: var(--danger-bg); color: var(--danger); }
-    .empty-state { text-align: center; padding: 26px; color: var(--muted); }
+    .empty-state { text-align: center; padding: 28px; color: var(--muted); }
 
     .modal-backdrop {
       position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55);
       display: none; align-items: center; justify-content: center; padding: 16px; z-index: 50;
     }
     .modal-backdrop.open { display: flex; }
-    .modal { background: #fff; width: 100%; max-width: 500px; border-radius: var(--radius); padding: 22px; max-height: 92vh; overflow-y: auto; }
-    .modal h3 { margin-bottom: 10px; }
+    .modal {
+      background: #fff; width: 100%; max-width: 480px; border-radius: var(--radius);
+      padding: 24px; max-height: 90vh; overflow-y: auto;
+    }
+    .modal h3 { margin-bottom: 12px; }
   </style>
 </head>
 <body>
@@ -145,11 +147,11 @@
         </div>
       </div>
       <div class="header-actions">
-        <span id="cloudStatusBadge" class="pill cloud-off">Local Mode</span>
+        <span id="cloudStatusBadge" class="pill">Cloud Synced</span>
         <span id="sessionStatusBadge" class="pill">Session Open</span>
-        <button class="btn-secondary" onclick="requirePin(() => openRosterModal())">Class Roster (<span id="rosterCount">0</span>)</button>
-        <button class="btn-secondary" onclick="requirePin(() => openCloudModal())">Cloud Sync</button>
-        <button class="btn-secondary" onclick="requirePin(() => openSessionModal())">Edit Session</button>
+        <button class="btn-secondary" onclick="requirePin(openRosterModal)">Class Roster (<span id="rosterCountBtn">0</span>)</button>
+        <button class="btn-secondary" onclick="requirePin(openCloudModal)">Cloud Sync</button>
+        <button class="btn-secondary" onclick="requirePin(openSessionModal)">Edit Session</button>
       </div>
     </header>
 
@@ -159,10 +161,13 @@
     </section>
 
     <div class="grid">
-      <!-- QR Code Generator Card -->
       <div class="card">
-        <div class="eyebrow">Current class • Live QR Generator</div>
-        <h2 id="displayClassName">Medical Biotechnology Year 1</h2>
+        <div class="card-header">
+          <div>
+            <div class="eyebrow">Current class • Live QR Generator</div>
+            <h2 id="displayClassName">Medical Biotechnology Year 1</h2>
+          </div>
+        </div>
 
         <div class="meta-row">
           <span class="meta-tag" id="displayDate">Today</span>
@@ -172,24 +177,26 @@
         </div>
 
         <div class="qr-wrapper">
-          <canvas id="qrCanvas" width="210" height="210"></canvas>
-          <p style="font-size:0.88rem; font-weight:600;">Scan this QR code with any phone camera to sign in.</p>
+          <div id="qrBox" aria-label="Attendance QR Code"></div>
+          <p style="font-size:0.9rem; font-weight:600;">Scan this QR code with your phone camera to check in.</p>
           <p class="timer-text" id="qrTimerText">Code rotates in 45s • Token: #0000</p>
-          <div class="scan-url-box" id="scanUrlText"></div>
         </div>
 
         <div class="btn-group">
           <button class="btn-secondary" onclick="requirePin(() => rotateQrCode(true))">Refresh code</button>
           <button class="btn-secondary" onclick="downloadQrPng()">Download QR PNG</button>
-          <button class="btn-danger" id="endSessionBtn" onclick="requirePin(() => toggleSessionState())">End session</button>
+          <button class="btn-danger" id="endSessionBtn" onclick="requirePin(toggleSessionState)">End session</button>
         </div>
       </div>
 
-      <!-- Student Check-In Card -->
       <div class="card">
-        <div class="eyebrow">Student check-in</div>
-        <h2>Confirm Your Attendance</h2>
-        <p style="font-size:0.88rem; color:var(--muted); margin:4px 0 14px;">
+        <div class="card-header">
+          <div>
+            <div class="eyebrow">Student check-in</div>
+            <h2>Confirm Your Attendance</h2>
+          </div>
+        </div>
+        <p style="font-size:0.9rem; color:var(--muted); margin-bottom:16px;">
           Enter your MMUST registration number after scanning the QR code on screen.
         </p>
 
@@ -197,7 +204,7 @@
           <div class="form-group">
             <label for="regNumber">MMUST Registration Number</label>
             <input type="text" id="regNumber" placeholder="e.g. MBT/B/01-01234/2026" oninput="autoFillFromRoster()" required />
-            <div class="hint" id="rosterHint">Format: MBT/B/01-XXXXX/2026 or SBT/B/01-XXXXX/2026</div>
+            <div class="hint">Format: MBT/B/01-XXXXX/2026 or SBT/B/01-XXXXX/2026</div>
           </div>
 
           <div class="form-group">
@@ -217,23 +224,24 @@
       </div>
     </div>
 
-    <!-- Live Attendance Tracker -->
     <div class="card">
       <div class="toolbar">
         <div>
           <div class="eyebrow">Live attendance</div>
-          <h2>Students checked in (<span id="presentCount">0</span> present)</h2>
+          <h2>Students checked in (<span id="presentCount">0</span> present<span id="absentSummary"></span>)</h2>
         </div>
 
         <div class="btn-group">
           <input type="text" id="searchInput" class="search-box" placeholder="Search name or reg no..." oninput="renderTable()" />
-          <select id="filterSelect" style="width:auto;" onchange="renderTable()">
-            <option value="ALL">All Checked-In</option>
-            <option value="ABSENT">Absent (From Roster)</option>
+          <select id="statusFilter" onchange="renderTable()" style="width:auto;">
+            <option value="ALL">All Records</option>
+            <option value="Present">Present Only</option>
+            <option value="Late">Late Only</option>
+            <option value="Absent">Absent (Roster)</option>
           </select>
-          <button class="btn-secondary" onclick="requirePin(() => openManualAddModal())">+ Manual Add</button>
+          <button class="btn-secondary" onclick="requirePin(openManualAddModal)">+ Manual Add</button>
           <button class="btn-primary" onclick="exportCSV()">Export CSV</button>
-          <button class="btn-danger" onclick="requirePin(() => clearAttendance())">Clear List</button>
+          <button class="btn-danger" onclick="requirePin(clearAttendance)">Clear List</button>
         </div>
       </div>
 
@@ -255,43 +263,34 @@
     </div>
   </div>
 
-  <!-- Class Roster Modal -->
-  <div class="modal-backdrop" id="rosterModal">
-    <div class="modal">
-      <h3>Manage Class Roster</h3>
-      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:12px;">
-        Paste your student list below (one student per line as <strong>REG_NUMBER, FULL NAME</strong>). When a roster is loaded, names auto-fill and absent students can be tracked.
-      </p>
-      <div class="form-group">
-        <label>Student List (Format: MBT/B/01-01234/2026, Full Name)</label>
-        <textarea id="rosterTextarea" rows="8" placeholder="MBT/B/01-01234/2026, Student One&#10;MBT/B/01-01235/2026, Student Two"></textarea>
-      </div>
-      <div class="form-group">
-        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-          <input type="checkbox" id="restrictToRosterCheck" style="width:auto;" />
-          Only allow students listed on this roster to check in
-        </label>
-      </div>
-      <div class="btn-group" style="justify-content:space-between;">
-        <button class="btn-danger" onclick="clearRoster()">Clear Roster</button>
-        <div class="btn-group">
-          <button class="btn-secondary" onclick="closeModals()">Cancel</button>
-          <button class="btn-primary" onclick="saveRoster()">Save Roster</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Session Edit Modal -->
+  <!-- Session Modal -->
   <div class="modal-backdrop" id="sessionModal">
     <div class="modal">
       <h3>Edit Session Details</h3>
-      <div class="form-group"><label>Class / Course Title</label><input type="text" id="editClassName" /></div>
-      <div class="form-group"><label>Time Window</label><input type="text" id="editTime" /></div>
-      <div class="form-group"><label>Session / Unit Code</label><input type="text" id="editCode" /></div>
-      <div class="form-group"><label>Lecture Room</label><input type="text" id="editRoom" /></div>
-      <div class="form-group"><label>Mark Late After (minutes)</label><input type="number" id="editLateMins" min="1" max="120" /></div>
-      <div class="form-group"><label>Change Lecturer PIN (4 digits)</label><input type="password" id="editPin" maxlength="4" placeholder="Leave blank to keep current" /></div>
+      <div class="form-group">
+        <label>Class / Course Title</label>
+        <input type="text" id="editClassName" />
+      </div>
+      <div class="form-group">
+        <label>Time Window</label>
+        <input type="text" id="editTime" />
+      </div>
+      <div class="form-group">
+        <label>Session / Unit Code</label>
+        <input type="text" id="editCode" />
+      </div>
+      <div class="form-group">
+        <label>Lecture Room</label>
+        <input type="text" id="editRoom" />
+      </div>
+      <div class="form-group">
+        <label>Mark Late After (minutes from session open)</label>
+        <input type="number" id="editLateMins" min="1" max="180" />
+      </div>
+      <div class="form-group">
+        <label>Update Lecturer PIN (4 digits)</label>
+        <input type="password" id="editPin" maxlength="4" placeholder="Leave blank to keep current PIN" />
+      </div>
       <div class="btn-group" style="justify-content:flex-end;">
         <button class="btn-secondary" onclick="closeModals()">Cancel</button>
         <button class="btn-primary" onclick="saveSessionSettings()">Save Changes</button>
@@ -299,18 +298,40 @@
     </div>
   </div>
 
+  <!-- Roster Modal -->
+  <div class="modal-backdrop" id="rosterModal">
+    <div class="modal">
+      <h3>Manage Class Roster</h3>
+      <p class="hint" style="margin-bottom:10px;">
+        Paste one student per line using <strong>REG_NUMBER, FULL NAME</strong>.
+      </p>
+      <div class="form-group">
+        <textarea id="rosterTextarea" rows="8" placeholder="MBT/B/01-01234/2026, Jane Wanjiku&#10;MBT/B/01-01235/2026, Brian Otieno"></textarea>
+      </div>
+      <div class="form-group" style="display:flex; align-items:center; gap:8px;">
+        <input type="checkbox" id="strictRosterCheck" style="width:auto;" />
+        <label for="strictRosterCheck" style="margin:0;">Only allow students on this roster to check in</label>
+      </div>
+      <div class="btn-group" style="justify-content:flex-end;">
+        <button class="btn-secondary" onclick="closeModals()">Cancel</button>
+        <button class="btn-primary" onclick="saveRoster()">Save Roster</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Cloud Sync Modal -->
   <div class="modal-backdrop" id="cloudModal">
     <div class="modal">
-      <h3>Firebase Live Cloud Sync</h3>
-      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:12px;">
-        Paste your free Firebase Realtime Database URL so phone scans appear live on your lecturer screen.
+      <h3>Firebase Cloud Sync Settings</h3>
+      <p class="hint" style="margin-bottom:12px;">
+        Connected to your Firebase Realtime Database URL so phone check-ins sync live to this screen.
       </p>
       <div class="form-group">
         <label>Firebase Realtime Database URL</label>
-        <input type="url" id="firebaseUrlInput" placeholder="https://your-project-default-rtdb.firebaseio.com" />
+        <input type="url" id="firebaseUrlInput" placeholder="https://biocheck-mmust-default-rtdb.firebaseio.com" />
       </div>
       <div class="btn-group" style="justify-content:flex-end;">
+        <button class="btn-secondary" onclick="disconnectCloud()">Use Local Only</button>
         <button class="btn-secondary" onclick="closeModals()">Cancel</button>
         <button class="btn-primary" onclick="saveCloudSettings()">Save & Connect</button>
       </div>
@@ -321,8 +342,14 @@
   <div class="modal-backdrop" id="manualModal">
     <div class="modal">
       <h3>Manual Lecturer Override</h3>
-      <div class="form-group"><label>MMUST Registration Number</label><input type="text" id="manualReg" placeholder="MBT/B/01-01234/2026" /></div>
-      <div class="form-group"><label>Student Full Name</label><input type="text" id="manualName" placeholder="Full Name" /></div>
+      <div class="form-group">
+        <label>MMUST Registration Number</label>
+        <input type="text" id="manualReg" placeholder="MBT/B/01-01234/2026" />
+      </div>
+      <div class="form-group">
+        <label>Student Full Name</label>
+        <input type="text" id="manualName" placeholder="Full Name" />
+      </div>
       <div class="form-group">
         <label>Status</label>
         <select id="manualStatus">
@@ -337,253 +364,305 @@
     </div>
   </div>
 
+  <!-- Lightweight Self-Contained QR Encoder (No External CDN Required) -->
   <script>
-    /* ==========================================================================
-       EMBEDDED STANDALONE QR CODE GENERATOR (100% OFFLINE / ZERO DEPENDENCIES)
-       Implements ISO/IEC 18004 Byte-Mode QR Code Matrix Generation
-       ========================================================================== */
-    const QRGen = (() => {
-      const EXP = new Uint8Array(512), LOG = new Uint8Array(256);
-      let x = 1;
-      for (let i = 0; i < 255; i++) {
-        EXP[i] = x; LOG[x] = i;
-        x = (x << 1) ^ (x & 128 ? 0x11d : 0);
-      }
-      for (let i = 255; i < 512; i++) EXP[i] = EXP[i - 255];
-
-      const gfMul = (a, b) => (a && b) ? EXP[LOG[a] + LOG[b]] : 0;
-
-      function rsGenPoly(deg) {
-        let p = [1];
-        for (let i = 0; i < deg; i++) {
-          const next = new Array(p.length + 1).fill(0);
-          const factor = EXP[i];
-          for (let j = 0; j < p.length; j++) {
-            next[j] ^= p[j];
-            next[j + 1] ^= gfMul(p[j], factor);
+    const QRGenerator = (function () {
+      function QR8bitByte(data) {
+        this.mode = 4;
+        this.data = data;
+        this.parsedData = [];
+        for (let i = 0; i < this.data.length; i++) {
+          const byteArray = [];
+          const code = this.data.charCodeAt(i);
+          if (code > 0x10000) {
+            byteArray[0] = 0xF0 | ((code & 0x1C0000) >>> 18);
+            byteArray[1] = 0x80 | ((code & 0x3F000) >>> 12);
+            byteArray[2] = 0x80 | ((code & 0xFC0) >>> 6);
+            byteArray[3] = 0x80 | (code & 0x3F);
+          } else if (code > 0x800) {
+            byteArray[0] = 0xE0 | ((code & 0xF000) >>> 12);
+            byteArray[1] = 0x80 | ((code & 0xFC0) >>> 6);
+            byteArray[2] = 0x80 | (code & 0x3F);
+          } else if (code > 0x80) {
+            byteArray[0] = 0xC0 | ((code & 0x7C0) >>> 6);
+            byteArray[1] = 0x80 | (code & 0x3F);
+          } else {
+            byteArray[0] = code;
           }
-          p = next;
+          this.parsedData.push(...byteArray);
         }
-        return p;
       }
+      QR8bitByte.prototype.getLength = function () { return this.parsedData.length; };
+      QR8bitByte.prototype.write = function (buffer) {
+        for (let i = 0; i < this.parsedData.length; i++) buffer.put(this.parsedData[i], 8);
+      };
 
-      function rsEncode(data, ecLen) {
-        const gen = rsGenPoly(ecLen);
-        const rem = new Array(ecLen).fill(0);
-        for (const byte of data) {
-          const factor = byte ^ rem[0];
-          rem.shift();
-          rem.push(0);
-          for (let i = 0; i < ecLen; i++) rem[i] ^= gfMul(gen[i + 1], factor);
-        }
-        return rem;
+      function QRBitBuffer() { this.buffer = []; this.length = 0; }
+      QRBitBuffer.prototype.get = function (index) {
+        const bufIndex = Math.floor(index / 8);
+        return ((this.buffer[bufIndex] >>> (7 - index % 8)) & 1) === 1;
+      };
+      QRBitBuffer.prototype.put = function (num, length) {
+        for (let i = 0; i < length; i++) this.putBit(((num >>> (length - i - 1)) & 1) === 1);
+      };
+      QRBitBuffer.prototype.putBit = function (bit) {
+        const bufIndex = Math.floor(this.length / 8);
+        if (this.buffer.length <= bufIndex) this.buffer.push(0);
+        if (bit) this.buffer[bufIndex] |= (0x80 >>> (this.length % 8));
+        this.length++;
+      };
+
+      const QRMath = {
+        glog: function (n) { if (n < 1) throw new Error("glog(" + n + ")"); return QRMath.LOG_TABLE[n]; },
+        gexp: function (n) { while (n < 0) n += 255; while (n >= 256) n -= 255; return QRMath.EXP_TABLE[n]; },
+        EXP_TABLE: new Array(256),
+        LOG_TABLE: new Array(256)
+      };
+      for (let i = 0; i < 8; i++) QRMath.EXP_TABLE[i] = 1 << i;
+      for (let i = 8; i < 256; i++) QRMath.EXP_TABLE[i] = QRMath.EXP_TABLE[i - 4] ^ QRMath.EXP_TABLE[i - 5] ^ QRMath.EXP_TABLE[i - 6] ^ QRMath.EXP_TABLE[i - 8];
+      for (let i = 0; i < 255; i++) QRMath.LOG_TABLE[QRMath.EXP_TABLE[i]] = i;
+
+      function QRPolynomial(num, shift) {
+        let offset = 0;
+        while (offset < num.length && num[offset] === 0) offset++;
+        this.num = new Array(num.length - offset + shift);
+        for (let i = 0; i < num.length - offset; i++) this.num[i] = num[i + offset];
       }
+      QRPolynomial.prototype.get = function (index) { return this.num[index]; };
+      QRPolynomial.prototype.getLength = function () { return this.num.length; };
+      QRPolynomial.prototype.multiply = function (e) {
+        const num = new Array(this.getLength() + e.getLength() - 1).fill(0);
+        for (let i = 0; i < this.getLength(); i++)
+          for (let j = 0; j < e.getLength(); j++)
+            num[i + j] ^= QRMath.gexp(QRMath.glog(this.get(i)) + QRMath.glog(e.get(j)));
+        return new QRPolynomial(num, 0);
+      };
+      QRPolynomial.prototype.mod = function (e) {
+        if (this.getLength() - e.getLength() < 0) return this;
+        const ratio = QRMath.glog(this.get(0)) - QRMath.glog(e.get(0));
+        const num = this.num.slice();
+        for (let i = 0; i < e.getLength(); i++) num[i] ^= QRMath.gexp(QRMath.glog(e.get(i)) + ratio);
+        return new QRPolynomial(num, 0).mod(e);
+      };
 
-      // Version capacities (Byte mode, Error Correction Level L)
-      const VERSIONS = [
-        null,
-        { ver: 1, size: 21, total: 26, ec: 7, blocks: 1, align: [] },
-        { ver: 2, size: 25, total: 44, ec: 10, blocks: 1, align: [6, 18] },
-        { ver: 3, size: 29, total: 70, ec: 15, blocks: 1, align: [6, 22] },
-        { ver: 4, size: 33, total: 100, ec: 20, blocks: 1, align: [6, 26] },
-        { ver: 5, size: 37, total: 134, ec: 26, blocks: 1, align: [6, 30] },
-        { ver: 6, size: 41, total: 172, ec: 18, blocks: 2, align: [6, 34] },
-        { ver: 7, size: 45, total: 196, ec: 20, blocks: 2, align: [6, 22, 38] },
-        { ver: 8, size: 49, total: 242, ec: 24, blocks: 2, align: [6, 24, 42] },
-        { ver: 9, size: 53, total: 292, ec: 30, blocks: 2, align: [6, 26, 46] },
-        { ver: 10, size: 57, total: 346, ec: 18, blocks: 4, align: [6, 28, 50] }
+      const RS_BLOCKS = [
+        [1, 26, 19], [1, 44, 34], [1, 70, 55], [1, 100, 80], [1, 134, 108],
+        [2, 86, 68], [2, 98, 78], [2, 121, 97], [2, 146, 116], [2, 86, 68, 2, 87, 69]
       ];
 
-      function buildMatrix(text) {
-        const bytes = new TextEncoder().encode(text);
-        let cfg = null;
-        for (let v = 1; v < VERSIONS.length; v++) {
-          const dataCap = VERSIONS[v].total - VERSIONS[v].ec * VERSIONS[v].blocks;
-          const headerBytes = v >= 10 ? 3 : 2;
-          if (bytes.length + headerBytes <= dataCap) { cfg = VERSIONS[v]; break; }
+      function getRSBlocks(typeNumber) {
+        const rsBlock = RS_BLOCKS[typeNumber - 1];
+        const list = [];
+        for (let i = 0; i < rsBlock.length / 3; i++) {
+          const count = rsBlock[i * 3];
+          const totalCount = rsBlock[i * 3 + 1];
+          const dataCount = rsBlock[i * 3 + 2];
+          for (let j = 0; j < count; j++) list.push({ totalCount, dataCount });
         }
-        if (!cfg) cfg = VERSIONS[VERSIONS.length - 1];
+        return list;
+      }
 
-        const { ver, size, total, ec, blocks, align } = cfg;
-        const dataCap = total - ec * blocks;
+      const PATTERN_POSITION_TABLE = [
+        [], [6, 18], [6, 22], [6, 26], [6, 30], [6, 34],
+        [6, 22, 38], [6, 24, 42], [6, 26, 46], [6, 28, 50]
+      ];
 
-        // Build bitstream
-        const bits = [];
-        const pushBits = (val, len) => { for (let i = len - 1; i >= 0; i--) bits.push((val >> i) & 1); };
-        pushBits(0b0100, 4); // Byte mode
-        pushBits(bytes.length, ver >= 10 ? 16 : 8);
-        for (const b of bytes) pushBits(b, 8);
-        pushBits(0, Math.min(4, dataCap * 8 - bits.length));
-        while (bits.length % 8 !== 0) bits.push(0);
+      function getBCHTypeInfo(data) {
+        let d = data << 10;
+        while (getBCHDigit(d) - getBCHDigit(0x537) >= 0) d ^= (0x537 << (getBCHDigit(d) - getBCHDigit(0x537)));
+        return ((data << 10) | d) ^ 0x5412;
+      }
+      function getBCHDigit(data) {
+        let digit = 0;
+        while (data !== 0) { digit++; data >>>= 1; }
+        return digit;
+      }
 
-        const codewords = [];
-        for (let i = 0; i < bits.length; i += 8) {
-          let byte = 0;
-          for (let j = 0; j < 8; j++) byte = (byte << 1) | bits[i + j];
-          codewords.push(byte);
-        }
-        const pads = [0xec, 0x11];
-        let pIdx = 0;
-        while (codewords.length < dataCap) { codewords.push(pads[pIdx++ % 2]); }
-
-        // Split into RS blocks & interleave
-        const baseLen = Math.floor(dataCap / blocks);
-        const extra = dataCap % blocks;
-        const dataBlocks = [], ecBlocks = [];
-        let offset = 0;
-        for (let b = 0; b < blocks; b++) {
-          const len = baseLen + (b >= blocks - extra ? 1 : 0);
-          const slice = codewords.slice(offset, offset + len);
-          offset += len;
-          dataBlocks.push(slice);
-          ecBlocks.push(rsEncode(slice, ec));
-        }
-
-        const finalBytes = [];
-        const maxDataLen = baseLen + (extra > 0 ? 1 : 0);
-        for (let i = 0; i < maxDataLen; i++) {
-          for (let b = 0; b < blocks; b++) if (i < dataBlocks[b].length) finalBytes.push(dataBlocks[b][i]);
-        }
-        for (let i = 0; i < ec; i++) {
-          for (let b = 0; b < blocks; b++) finalBytes.push(ecBlocks[b][i]);
-        }
-
-        // Initialize grid (-1 = unset, 0 = white, 1 = black)
-        const grid = Array.from({ length: size }, () => new Int8Array(size).fill(-1));
-        const isFunc = Array.from({ length: size }, () => new Uint8Array(size));
-
-        const setFunc = (r, c, val) => {
-          if (r >= 0 && r < size && c >= 0 && c < size) { grid[r][c] = val; isFunc[r][c] = 1; }
-        };
-
-        // Finder patterns
-        const drawFinder = (r0, c0) => {
-          for (let dr = -1; dr <= 7; dr++) {
-            for (let dc = -1; dc <= 7; dc++) {
-              const inBox = dr >= 0 && dr <= 6 && dc >= 0 && dc <= 6;
-              const onBorder = dr === 0 || dr === 6 || dc === 0 || dc === 6;
-              const inCenter = dr >= 2 && dr <= 4 && dc >= 2 && dc <= 4;
-              setFunc(r0 + dr, c0 + dc, inBox && (onBorder || inCenter) ? 1 : 0);
-            }
-          }
-        };
-        drawFinder(0, 0);
-        drawFinder(0, size - 7);
-        drawFinder(size - 7, 0);
-
-        // Alignment patterns
-        for (const r of align) {
-          for (const c of align) {
-            if (isFunc[r][c]) continue;
-            for (let dr = -2; dr <= 2; dr++) {
-              for (let dc = -2; dc <= 2; dc++) {
-                const val = Math.abs(dr) === 2 || Math.abs(dc) === 2 || (dr === 0 && dc === 0) ? 1 : 0;
-                setFunc(r + dr, c + dc, val);
-              }
-            }
+      function QRCodeModel(typeNumber) {
+        this.typeNumber = typeNumber;
+        this.modules = null;
+        this.moduleCount = 0;
+        this.dataCache = null;
+        this.dataList = [];
+      }
+      QRCodeModel.prototype.addData = function (data) { this.dataList.push(new QR8bitByte(data)); this.dataCache = null; };
+      QRCodeModel.prototype.isDark = function (row, col) { return this.modules[row][col]; };
+      QRCodeModel.prototype.getModuleCount = function () { return this.moduleCount; };
+      QRCodeModel.prototype.make = function () { this.makeImpl(false, 2); };
+      QRCodeModel.prototype.makeImpl = function (test, maskPattern) {
+        this.moduleCount = this.typeNumber * 4 + 17;
+        this.modules = Array.from({ length: this.moduleCount }, () => new Array(this.moduleCount).fill(null));
+        this.setupPositionProbePattern(0, 0);
+        this.setupPositionProbePattern(this.moduleCount - 7, 0);
+        this.setupPositionProbePattern(0, this.moduleCount - 7);
+        this.setupPositionAdjustPattern();
+        this.setupTimingPattern();
+        this.setupTypeInfo(test, maskPattern);
+        if (this.dataCache == null) this.dataCache = QRCodeModel.createData(this.typeNumber, this.dataList);
+        this.mapData(this.dataCache, maskPattern);
+      };
+      QRCodeModel.prototype.setupPositionProbePattern = function (row, col) {
+        for (let r = -1; r <= 7; r++) {
+          if (row + r <= -1 || this.moduleCount <= row + r) continue;
+          for (let c = -1; c <= 7; c++) {
+            if (col + c <= -1 || this.moduleCount <= col + c) continue;
+            this.modules[row + r][col + c] = (0 <= r && r <= 6 && (c === 0 || c === 6)) ||
+              (0 <= c && c <= 6 && (r === 0 || r === 6)) || (2 <= r && r <= 4 && 2 <= c && c <= 4);
           }
         }
-
-        // Timing patterns
-        for (let i = 8; i < size - 8; i++) {
-          if (!isFunc[6][i]) setFunc(6, i, i % 2 === 0 ? 1 : 0);
-          if (!isFunc[i][6]) setFunc(i, 6, i % 2 === 0 ? 1 : 0);
-        }
-
-        // Reserve format info & dark module
-        setFunc(size - 8, 8, 1);
-        for (let i = 0; i < 9; i++) {
-          if (!isFunc[8][i]) setFunc(8, i, 0);
-          if (!isFunc[i][8]) setFunc(i, 8, 0);
-        }
-        for (let i = 0; i < 8; i++) {
-          if (!isFunc[8][size - 1 - i]) setFunc(8, size - 1 - i, 0);
-          if (!isFunc[size - 1 - i][8]) setFunc(size - 1 - i, 8, 0);
-        }
-
-        // Version info for ver >= 7
-        if (ver >= 7) {
-          const VER_BITS = { 7: 0x07c94, 8: 0x085bc, 9: 0x09a99, 10: 0x0a4d3 };
-          const vBits = VER_BITS[ver];
-          for (let i = 0; i < 18; i++) {
-            const bit = (vBits >> i) & 1;
-            const r = Math.floor(i / 3), c = size - 11 + (i % 3);
-            setFunc(r, c, bit);
-            setFunc(c, r, bit);
+      };
+      QRCodeModel.prototype.setupTimingPattern = function () {
+        for (let r = 8; r < this.moduleCount - 8; r++) if (this.modules[r][6] == null) this.modules[r][6] = (r % 2 === 0);
+        for (let c = 8; c < this.moduleCount - 8; c++) if (this.modules[6][c] == null) this.modules[6][c] = (c % 2 === 0);
+      };
+      QRCodeModel.prototype.setupPositionAdjustPattern = function () {
+        const pos = PATTERN_POSITION_TABLE[this.typeNumber - 1];
+        for (let i = 0; i < pos.length; i++) {
+          for (let j = 0; j < pos.length; j++) {
+            const row = pos[i], col = pos[j];
+            if (this.modules[row][col] != null) continue;
+            for (let r = -2; r <= 2; r++)
+              for (let c = -2; c <= 2; c++)
+                this.modules[row + r][col + c] = (r === -2 || r === 2 || c === -2 || c === 2 || (r === 0 && c === 0));
           }
         }
-
-        // Place data bits with mask 0 ((r + c) % 2 === 0)
-        let bitIdx = 0;
-        const totalBits = finalBytes.length * 8;
-        let up = true;
-        for (let col = size - 1; col >= 1; col -= 2) {
-          if (col === 6) col--;
-          for (let step = 0; step < size; step++) {
-            const r = up ? size - 1 - step : step;
-            for (let dx = 0; dx < 2; dx++) {
-              const c = col - dx;
-              if (!isFunc[r][c]) {
-                let bit = 0;
-                if (bitIdx < totalBits) {
-                  bit = (finalBytes[bitIdx >> 3] >> (7 - (bitIdx & 7))) & 1;
-                  bitIdx++;
-                }
-                if ((r + c) % 2 === 0) bit ^= 1;
-                grid[r][c] = bit;
-              }
-            }
-          }
-          up = !up;
-        }
-
-        // Format info for Level L (01), Mask 0 (000) -> 0x77c4
-        const fmt = 0x77c4;
+      };
+      QRCodeModel.prototype.setupTypeInfo = function (test, maskPattern) {
+        const data = (1 << 3) | maskPattern;
+        const bits = getBCHTypeInfo(data);
         for (let i = 0; i < 15; i++) {
-          const bit = (fmt >> i) & 1;
-          if (i < 6) grid[8][i] = bit;
-          else if (i < 8) grid[8][i + 1] = bit;
-          else grid[8][size - 15 + i] = bit;
-
-          if (i < 8) grid[size - 1 - i][8] = bit;
-          else if (i < 9) grid[15 - i][8] = bit;
-          else grid[14 - i][8] = bit;
+          const mod = (!test && ((bits >> i) & 1) === 1);
+          if (i < 6) this.modules[i][8] = mod;
+          else if (i < 8) this.modules[i + 1][8] = mod;
+          else this.modules[this.moduleCount - 15 + i][8] = mod;
+          if (i < 8) this.modules[8][this.moduleCount - i - 1] = mod;
+          else if (i < 9) this.modules[8][15 - i - 1 + 1] = mod;
+          else this.modules[8][15 - i - 1] = mod;
         }
+        this.modules[this.moduleCount - 8][8] = (!test);
+      };
+      QRCodeModel.prototype.mapData = function (data, maskPattern) {
+        let inc = -1, row = this.moduleCount - 1, bitIndex = 7, byteIndex = 0;
+        for (let col = this.moduleCount - 1; col > 0; col -= 2) {
+          if (col === 6) col--;
+          while (true) {
+            for (let c = 0; c < 2; c++) {
+              if (this.modules[row][col - c] == null) {
+                let dark = false;
+                if (byteIndex < data.length) dark = (((data[byteIndex] >>> bitIndex) & 1) === 1);
+                const mask = (col - c) % 3 === 0;
+                if (mask) dark = !dark;
+                this.modules[row][col - c] = dark;
+                bitIndex--;
+                if (bitIndex === -1) { byteIndex++; bitIndex = 7; }
+              }
+            }
+            row += inc;
+            if (row < 0 || this.moduleCount <= row) { row -= inc; inc = -inc; break; }
+          }
+        }
+      };
+      QRCodeModel.createData = function (typeNumber, dataList) {
+        const rsBlocks = getRSBlocks(typeNumber);
+        const buffer = new QRBitBuffer();
+        for (let i = 0; i < dataList.length; i++) {
+          const data = dataList[i];
+          buffer.put(data.mode, 4);
+          buffer.put(data.getLength(), 8);
+          data.write(buffer);
+        }
+        let totalDataCount = 0;
+        for (let i = 0; i < rsBlocks.length; i++) totalDataCount += rsBlocks[i].dataCount;
+        if (buffer.length + 4 <= totalDataCount * 8) buffer.put(0, 4);
+        while (buffer.length % 8 !== 0) buffer.putBit(false);
+        while (true) {
+          if (buffer.length >= totalDataCount * 8) break;
+          buffer.put(0xEC, 8);
+          if (buffer.length >= totalDataCount * 8) break;
+          buffer.put(0x11, 8);
+        }
+        let offset = 0, maxDcCount = 0, maxEcCount = 0;
+        const dcdata = new Array(rsBlocks.length), ecdata = new Array(rsBlocks.length);
+        for (let r = 0; r < rsBlocks.length; r++) {
+          const dcCount = rsBlocks[r].dataCount, ecCount = rsBlocks[r].totalCount - dcCount;
+          maxDcCount = Math.max(maxDcCount, dcCount);
+          maxEcCount = Math.max(maxEcCount, ecCount);
+          dcdata[r] = new Array(dcCount);
+          for (let i = 0; i < dcdata[r].length; i++) dcdata[r][i] = 0xff & buffer.buffer[i + offset];
+          offset += dcCount;
+          let rsPoly = new QRPolynomial([1], 0);
+          for (let i = 0; i < ecCount; i++) rsPoly = rsPoly.multiply(new QRPolynomial([1, QRMath.gexp(i)], 0));
+          const rawPoly = new QRPolynomial(dcdata[r], rsPoly.getLength() - 1);
+          const modPoly = rawPoly.mod(rsPoly);
+          ecdata[r] = new Array(rsPoly.getLength() - 1);
+          for (let i = 0; i < ecdata[r].length; i++) {
+            const modIndex = i + modPoly.getLength() - ecdata[r].length;
+            ecdata[r][i] = (modIndex >= 0) ? modPoly.get(modIndex) : 0;
+          }
+        }
+        const totalCodeCount = rsBlocks.reduce((acc, b) => acc + b.totalCount, 0);
+        const data = new Array(totalCodeCount);
+        let index = 0;
+        for (let i = 0; i < maxDcCount; i++)
+          for (let r = 0; r < rsBlocks.length; r++)
+            if (i < dcdata[r].length) data[index++] = dcdata[r][i];
+        for (let i = 0; i < maxEcCount; i++)
+          for (let r = 0; r < rsBlocks.length; r++)
+            if (i < ecdata[r].length) data[index++] = ecdata[r][i];
+        return data;
+      };
 
-        return grid;
-      }
-
-      function renderToCanvas(canvas, text) {
-        const matrix = buildMatrix(text);
-        const n = matrix.length;
-        const quiet = 3;
-        const total = n + quiet * 2;
-        const pxSize = 210;
-        canvas.width = pxSize;
-        canvas.height = pxSize;
-        const ctx = canvas.getContext("2d");
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(0, 0, pxSize, pxSize);
-        const scale = pxSize / total;
-        ctx.fillStyle = "#0f172a";
-        for (let r = 0; r < n; r++) {
-          for (let c = 0; c < n; c++) {
-            if (matrix[r][c] === 1) {
-              ctx.fillRect(Math.floor((c + quiet) * scale), Math.floor((r + quiet) * scale), Math.ceil(scale), Math.ceil(scale));
+      return {
+        renderToCanvas: function (canvas, text, size = 192) {
+          const byteLen = new TextEncoder().encode(text).length;
+          let typeNumber = 1;
+          const capacities = [17, 32, 53, 78, 106, 134, 154, 192, 230, 271];
+          for (let i = 0; i < capacities.length; i++) {
+            if (byteLen <= capacities[i]) { typeNumber = i + 1; break; }
+            if (i === capacities.length - 1) typeNumber = 10;
+          }
+          const qr = new QRCodeModel(typeNumber);
+          qr.addData(text);
+          qr.make();
+          const count = qr.getModuleCount();
+          const quiet = 2;
+          const totalModules = count + quiet * 2;
+          canvas.width = size;
+          canvas.height = size;
+          const ctx = canvas.getContext("2d");
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(0, 0, size, size);
+          const tile = size / totalModules;
+          ctx.fillStyle = "#0f172a";
+          for (let r = 0; r < count; r++) {
+            for (let c = 0; c < count; c++) {
+              if (qr.isDark(r, c)) {
+                ctx.fillRect(
+                  Math.floor((c + quiet) * tile),
+                  Math.floor((r + quiet) * tile),
+                  Math.ceil(tile),
+                  Math.ceil(tile)
+                );
+              }
             }
           }
         }
-      }
-
-      return { renderToCanvas };
+      };
     })();
+  </script>
 
-    /* ==========================================================================
-       BIOCHECK ATTENDANCE APPLICATION LOGIC
-       ========================================================================== */
-    const STORAGE_KEY = "biocheck_mmust_roster_v3";
+  <script>
+    const STORAGE_KEY = "biocheck_mmust_v3";
+    const DEFAULT_FIREBASE_URL = "https://biocheck-mmust-default-rtdb.firebaseio.com";
 
-    let state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+    let savedState = null;
+    try {
+      savedState = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    } catch (e) {
+      savedState = null;
+    }
+
+    let state = savedState || {
       className: "Medical Biotechnology Year 1",
       timeWindow: "09:00–10:00",
       sessionCode: "BIO-7124",
@@ -592,47 +671,66 @@
       pin: "1234",
       lateThresholdMins: 15,
       sessionStartedAt: Date.now(),
-      firebaseUrl: "",
-      restrictToRoster: false,
-      roster: [], // Array of { reg: "MBT/B/01-XXXXX/2026", name: "Full Name" }
+      firebaseUrl: DEFAULT_FIREBASE_URL,
+      strictRoster: false,
+      roster: [],
       attendees: []
     };
 
+    if (!state.firebaseUrl) {
+      state.firebaseUrl = DEFAULT_FIREBASE_URL;
+    }
+
     let currentToken = "";
     let countdown = 45;
+    let syncTimer = null;
 
     function saveState() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     }
 
-    function getCleanDbUrl() {
-      return state.firebaseUrl ? state.firebaseUrl.trim().replace(/\/+$/, "") : "";
+    function generateToken() {
+      return Math.floor(1000 + Math.random() * 9000).toString();
     }
 
-    function buildScanUrl() {
-      const base = window.location.href.split("?")[0];
+    function getScanUrl() {
+      const baseUrl = window.location.href.split("?")[0];
       const params = new URLSearchParams();
       params.set("s", state.sessionCode);
       params.set("t", currentToken);
-      const db = getCleanDbUrl();
-      if (db) params.set("db", db);
-      return `${base}?${params.toString()}`;
+      if (state.firebaseUrl) {
+        params.set("db", state.firebaseUrl);
+      }
+      return `${baseUrl}?${params.toString()}`;
     }
 
     function rotateQrCode(manual = false) {
-      currentToken = Math.floor(1000 + Math.random() * 9000).toString();
+      currentToken = generateToken();
       countdown = 45;
-      const scanUrl = buildScanUrl();
-      QRGen.renderToCanvas(document.getElementById("qrCanvas"), scanUrl);
+
+      const box = document.getElementById("qrBox");
+      box.innerHTML = "";
+      const canvas = document.createElement("canvas");
+      canvas.id = "qrCanvas";
+      box.appendChild(canvas);
+
+      const scanUrl = getScanUrl();
+      try {
+        QRGenerator.renderToCanvas(canvas, scanUrl, 192);
+      } catch (err) {
+        box.innerHTML = `<div style="padding:12px;font-weight:700;color:#0f766e;">Token: #${currentToken}</div>`;
+      }
+
       document.getElementById("qrTimerText").textContent = `Code rotates in ${countdown}s • Token: #${currentToken}`;
-      document.getElementById("scanUrlText").textContent = scanUrl;
-      if (manual) showAlert("QR code and security token refreshed.", "info");
+      if (state.firebaseUrl) pushSessionToCloud();
+      if (manual) showAlert("QR security token refreshed.", "info");
     }
 
     function downloadQrPng() {
       const canvas = document.getElementById("qrCanvas");
+      if (!canvas) return;
       const link = document.createElement("a");
-      link.download = `${state.sessionCode}_QR_${currentToken}.png`;
+      link.download = `${state.sessionCode}_QR.png`;
       link.href = canvas.toDataURL("image/png");
       link.click();
     }
@@ -651,14 +749,17 @@
 
     function applyUrlParams() {
       const params = new URLSearchParams(window.location.search);
-      const tokenParam = params.get("t");
-      const sessionParam = params.get("s");
-      const dbParam = params.get("db");
+      const token = params.get("t");
+      const session = params.get("s");
+      const db = params.get("db");
 
-      if (sessionParam) state.sessionCode = sessionParam.toUpperCase();
-      if (tokenParam) document.getElementById("tokenInput").value = tokenParam;
-      if (dbParam && !state.firebaseUrl) {
-        state.firebaseUrl = dbParam;
+      if (token) {
+        document.getElementById("tokenInput").value = token;
+        currentToken = token;
+      }
+      if (session) state.sessionCode = session;
+      if (db) {
+        state.firebaseUrl = db.replace(/\/$/, "");
         saveState();
       }
     }
@@ -669,102 +770,62 @@
 
     function autoFillFromRoster() {
       const reg = document.getElementById("regNumber").value.trim().toUpperCase();
-      const match = state.roster.find(r => r.reg === reg);
-      const nameInput = document.getElementById("studentName");
-      const hint = document.getElementById("rosterHint");
-      if (match) {
-        nameInput.value = match.name;
-        hint.textContent = `Verified on class roster: ${match.name}`;
-        hint.style.color = "#166534";
-      } else {
-        hint.textContent = "Format: MBT/B/01-XXXXX/2026 or SBT/B/01-XXXXX/2026";
-        hint.style.color = "";
-      }
-    }
-
-    async function pushToFirebase(record) {
-      const db = getCleanDbUrl();
-      if (!db) return;
-      const safeKey = record.reg.replace(/[.#$\[\]\/]/g, "_");
-      const endpoint = `${db}/biocheck/${encodeURIComponent(state.sessionCode)}/${safeKey}.json`;
-      await fetch(endpoint, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(record)
-      });
-    }
-
-    async function syncFromFirebase() {
-      const db = getCleanDbUrl();
-      if (!db) return;
-      try {
-        const res = await fetch(`${db}/biocheck/${encodeURIComponent(state.sessionCode)}.json`);
-        if (!res.ok) return;
-        const data = await res.json();
-        state.attendees = data ? Object.values(data).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)) : [];
-        saveState();
-        renderTable();
-      } catch (err) {
-        console.warn("Cloud sync error:", err);
+      const found = state.roster.find(r => r.reg === reg);
+      if (found) {
+        document.getElementById("studentName").value = found.name;
       }
     }
 
     async function handleStudentCheckin(e) {
       e.preventDefault();
-      if (!state.isOpen) return showAlert("This attendance session is closed.", "error");
+      if (!state.isOpen) return showAlert("This attendance session is currently closed.", "error");
 
-      const lockKey = `biocheck_lock_${state.sessionCode}_${state.sessionStartedAt}`;
-      if (localStorage.getItem(lockKey)) {
-        return showAlert("Device locked: Attendance already submitted from this browser.", "error");
+      const deviceLockKey = `biocheck_locked_${state.sessionCode}_${state.sessionStartedAt}`;
+      if (localStorage.getItem(deviceLockKey)) {
+        return showAlert("Device locked: Attendance has already been submitted from this browser.", "error");
       }
 
       const reg = document.getElementById("regNumber").value.trim().toUpperCase();
       const name = document.getElementById("studentName").value.trim();
       const token = document.getElementById("tokenInput").value.trim();
-      const urlToken = new URLSearchParams(window.location.search).get("t");
 
       if (!validateMmustReg(reg)) {
-        return showAlert("Invalid MMUST registration format (e.g. MBT/B/01-01234/2026).", "error");
+        return showAlert("Invalid MMUST registration format. Example: MBT/B/01-01234/2026", "error");
       }
 
-      if (state.roster.length > 0 && state.restrictToRoster) {
+      if (state.strictRoster && state.roster.length > 0) {
         const onRoster = state.roster.some(r => r.reg === reg);
-        if (!onRoster) {
-          return showAlert("Registration number not found on the official class roster.", "error");
-        }
+        if (!onRoster) return showAlert("Registration number not found on the enrolled class roster.", "error");
       }
 
-      if (token !== currentToken && (!urlToken || token !== urlToken)) {
+      if (token !== currentToken) {
         return showAlert("Invalid or expired QR token. Scan the live QR code on screen.", "error");
       }
 
       if (state.attendees.some(s => s.reg === reg)) {
-        return showAlert(`${reg} has already checked in.`, "error");
+        return showAlert(`Registration number ${reg} is already checked in.`, "error");
       }
 
       const elapsedMins = (Date.now() - state.sessionStartedAt) / 60000;
       const status = elapsedMins > state.lateThresholdMins ? "Late" : "Present";
-
       const record = {
         reg,
         name,
         time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" }),
-        status,
-        timestamp: Date.now()
+        status
       };
 
       state.attendees.unshift(record);
-      localStorage.setItem(lockKey, reg);
+      localStorage.setItem(deviceLockKey, reg);
       saveState();
+
+      if (state.firebaseUrl) {
+        await pushAttendeeToCloud(record);
+      }
+
       renderAll();
       document.getElementById("checkinForm").reset();
-
-      if (getCleanDbUrl()) {
-        await pushToFirebase(record);
-        showAlert(`Synced & Confirmed! ${name} (${reg}) marked ${status}.`, "success");
-      } else {
-        showAlert(`Confirmed! ${name} (${reg}) marked ${status}.`, "success");
-      }
+      showAlert(`Confirmed! ${name} (${reg}) marked as ${status}.`, "success");
     }
 
     function showAlert(msg, type) {
@@ -773,10 +834,10 @@
       box.className = `alert ${type}`;
     }
 
-    function requirePin(cb) {
-      const entered = prompt("Enter 4-digit Lecturer PIN (default: 1234):");
+    function requirePin(callback) {
+      const entered = prompt("Enter 4-digit Lecturer PIN (default is 1234):");
       if (entered === null) return;
-      if (entered === state.pin) cb();
+      if (entered === state.pin) callback();
       else alert("Incorrect Lecturer PIN.");
     }
 
@@ -787,49 +848,10 @@
         rotateQrCode(false);
       }
       saveState();
+      if (state.firebaseUrl) pushSessionToCloud();
       renderAll();
     }
 
-    /* Roster Management */
-    function openRosterModal() {
-      document.getElementById("rosterTextarea").value = state.roster.map(r => `${r.reg}, ${r.name}`).join("
-");
-      document.getElementById("restrictToRosterCheck").checked = state.restrictToRoster;
-      document.getElementById("rosterModal").classList.add("open");
-    }
-
-    function saveRoster() {
-      const raw = document.getElementById("rosterTextarea").value.trim();
-      const lines = raw ? raw.split(/
-?
-/) : [];
-      const parsed = [];
-      for (const line of lines) {
-        const parts = line.split(/,|	/);
-        if (parts.length >= 2) {
-          const reg = parts[0].trim().toUpperCase();
-          const name = parts.slice(1).join(" ").trim();
-          if (reg && name) parsed.push({ reg, name });
-        }
-      }
-      state.roster = parsed;
-      state.restrictToRoster = document.getElementById("restrictToRosterCheck").checked;
-      saveState();
-      closeModals();
-      renderAll();
-    }
-
-    function clearRoster() {
-      if (confirm("Remove all students from the class roster?")) {
-        state.roster = [];
-        state.restrictToRoster = false;
-        saveState();
-        closeModals();
-        renderAll();
-      }
-    }
-
-    /* Session & Cloud Modals */
     function openSessionModal() {
       document.getElementById("editClassName").value = state.className;
       document.getElementById("editTime").value = state.timeWindow;
@@ -847,9 +869,36 @@
       state.lateThresholdMins = parseInt(document.getElementById("editLateMins").value, 10) || 15;
       const newPin = document.getElementById("editPin").value.trim();
       if (/^\d{4}$/.test(newPin)) state.pin = newPin;
+
       saveState();
       closeModals();
       rotateQrCode(false);
+      renderAll();
+    }
+
+    function openRosterModal() {
+      document.getElementById("rosterTextarea").value = state.roster.map(r => `${r.reg}, ${r.name}`).join("
+");
+      document.getElementById("strictRosterCheck").checked = state.strictRoster;
+      document.getElementById("rosterModal").classList.add("open");
+    }
+
+    function saveRoster() {
+      const lines = document.getElementById("rosterTextarea").value.split("
+");
+      const parsed = [];
+      for (const line of lines) {
+        const parts = line.split(",");
+        if (parts.length >= 2) {
+          const reg = parts[0].trim().toUpperCase();
+          const name = parts.slice(1).join(",").trim();
+          if (reg && name) parsed.push({ reg, name });
+        }
+      }
+      state.roster = parsed;
+      state.strictRoster = document.getElementById("strictRosterCheck").checked;
+      saveState();
+      closeModals();
       renderAll();
     }
 
@@ -859,12 +908,85 @@
     }
 
     function saveCloudSettings() {
-      state.firebaseUrl = document.getElementById("firebaseUrlInput").value.trim();
+      const url = document.getElementById("firebaseUrlInput").value.trim().replace(/\/$/, "");
+      if (!url.startsWith("https://")) return alert("Enter a valid https:// Firebase Realtime Database URL.");
+      state.firebaseUrl = url;
+      saveState();
+      closeModals();
+      rotateQrCode(false);
+      startCloudPolling();
+      renderAll();
+    }
+
+    function disconnectCloud() {
+      state.firebaseUrl = "";
+      if (syncTimer) clearInterval(syncTimer);
       saveState();
       closeModals();
       rotateQrCode(false);
       renderAll();
-      if (getCleanDbUrl()) syncFromFirebase();
+    }
+
+    async function pushSessionToCloud() {
+      if (!state.firebaseUrl) return;
+      try {
+        await fetch(`${state.firebaseUrl}/sessions/${encodeURIComponent(state.sessionCode)}/meta.json`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            className: state.className,
+            timeWindow: state.timeWindow,
+            room: state.room,
+            isOpen: state.isOpen,
+            token: currentToken,
+            sessionStartedAt: state.sessionStartedAt
+          })
+        });
+      } catch (e) {}
+    }
+
+    async function pushAttendeeToCloud(record) {
+      if (!state.firebaseUrl) return;
+      const safeKey = record.reg.replace(/[.#$\[\]\/]/g, "_");
+      try {
+        await fetch(`${state.firebaseUrl}/sessions/${encodeURIComponent(state.sessionCode)}/attendees/${safeKey}.json`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(record)
+        });
+      } catch (e) {}
+    }
+
+    async function pullFromCloud() {
+      if (!state.firebaseUrl) return;
+      try {
+        const res = await fetch(`${state.firebaseUrl}/sessions/${encodeURIComponent(state.sessionCode)}.json`);
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!data) return;
+
+        if (data.meta && data.meta.token && new URLSearchParams(window.location.search).get("t")) {
+          currentToken = data.meta.token;
+          state.isOpen = data.meta.isOpen;
+        }
+
+        if (data.attendees) {
+          const cloudList = Object.values(data.attendees);
+          const merged = new Map();
+          state.attendees.forEach(a => merged.set(a.reg, a));
+          cloudList.forEach(a => merged.set(a.reg, a));
+          state.attendees = Array.from(merged.values());
+          saveState();
+          renderTable();
+        }
+      } catch (e) {}
+    }
+
+    function startCloudPolling() {
+      if (syncTimer) clearInterval(syncTimer);
+      if (!state.firebaseUrl) return;
+      pullFromCloud();
+      syncTimer = setInterval(pullFromCloud, 3000);
     }
 
     function openManualAddModal() {
@@ -876,119 +998,124 @@
       const name = document.getElementById("manualName").value.trim();
       const status = document.getElementById("manualStatus").value;
       if (!name || !validateMmustReg(reg)) return alert("Enter a valid name and MMUST registration number.");
-      if (state.attendees.some(s => s.reg === reg)) return alert("Student already checked in.");
+      if (state.attendees.some(s => s.reg === reg)) return alert("Student is already checked in.");
 
       const record = {
-        reg, name,
+        reg,
+        name,
         time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" }),
-        status, timestamp: Date.now()
+        status
       };
       state.attendees.unshift(record);
       saveState();
-      if (getCleanDbUrl()) await pushToFirebase(record);
+      if (state.firebaseUrl) await pushAttendeeToCloud(record);
       closeModals();
       renderAll();
     }
 
-    async function removeStudent(reg) {
+    function removeStudent(reg) {
       requirePin(async () => {
         state.attendees = state.attendees.filter(s => s.reg !== reg);
         saveState();
-        const db = getCleanDbUrl();
-        if (db) {
+        if (state.firebaseUrl) {
           const safeKey = reg.replace(/[.#$\[\]\/]/g, "_");
-          await fetch(`${db}/biocheck/${encodeURIComponent(state.sessionCode)}/${safeKey}.json`, { method: "DELETE" });
+          try {
+            await fetch(`${state.firebaseUrl}/sessions/${encodeURIComponent(state.sessionCode)}/attendees/${safeKey}.json`, { method: "DELETE" });
+          } catch (e) {}
         }
         renderAll();
       });
     }
 
-    async function clearAttendance() {
-      if (!confirm("Clear all checked-in students for this session?")) return;
-      state.attendees = [];
-      saveState();
-      const db = getCleanDbUrl();
-      if (db) await fetch(`${db}/biocheck/${encodeURIComponent(state.sessionCode)}.json`, { method: "DELETE" });
-      renderAll();
+    function clearAttendance() {
+      if (confirm("Clear all checked-in students for this session?")) {
+        state.attendees = [];
+        saveState();
+        if (state.firebaseUrl) {
+          fetch(`${state.firebaseUrl}/sessions/${encodeURIComponent(state.sessionCode)}/attendees.json`, { method: "DELETE" }).catch(() => {});
+        }
+        renderAll();
+      }
     }
 
     function closeModals() {
       document.querySelectorAll(".modal-backdrop").forEach(m => m.classList.remove("open"));
     }
 
-    function exportCSV() {
+    function getCombinedRecords() {
       const checkedMap = new Map(state.attendees.map(a => [a.reg, a]));
-      const rows = [];
-
-      // Export checked-in students first
-      state.attendees.forEach(s => {
-        rows.push([s.reg, `"${s.name.replace(/"/g, '""')}"`, s.time, s.status, state.sessionCode, `"${state.className}"`]);
-      });
-
-      // Append absent roster students if a roster is loaded
+      const combined = [...state.attendees];
       state.roster.forEach(r => {
         if (!checkedMap.has(r.reg)) {
-          rows.push([r.reg, `"${r.name.replace(/"/g, '""')}"`, "-", "Absent", state.sessionCode, `"${state.className}"`]);
+          combined.push({ reg: r.reg, name: r.name, time: "—", status: "Absent" });
         }
       });
+      return combined;
+    }
 
-      if (rows.length === 0) return alert("No attendance or roster data to export.");
+    function exportCSV() {
+      const records = getCombinedRecords();
+      if (records.length === 0) return alert("No records to export yet.");
 
       const headers = ["No", "Registration Number", "Student Name", "Check-In Time", "Status", "Session Code", "Class"];
-      const numberedRows = rows.map((r, i) => [i + 1, ...r].join(","));
-      const csv = [headers.join(","), ...numberedRows].join("
+      const rows = records.map((s, idx) => [
+        idx + 1,
+        s.reg,
+        `"${s.name.replace(/"/g, '""')}"`,
+        s.time,
+        s.status,
+        state.sessionCode,
+        `"${state.className}"`
+      ]);
+
+      const csvContent = [headers.join(","), ...rows.map(r => r.join(","))].join("
 ");
-      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${state.sessionCode}_Attendance_${new Date().toISOString().slice(0, 10)}.csv`;
-      a.click();
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${state.sessionCode}_Attendance_${new Date().toISOString().slice(0, 10)}.csv`;
+      link.click();
       URL.revokeObjectURL(url);
     }
 
     function renderTable() {
-      const q = document.getElementById("searchInput").value.toLowerCase();
-      const mode = document.getElementById("filterSelect").value;
-      const tbody = document.getElementById("attendanceBody");
-      document.getElementById("presentCount").textContent = state.attendees.length;
+      const query = document.getElementById("searchInput").value.toLowerCase();
+      const filter = document.getElementById("statusFilter").value;
+      const allRecords = getCombinedRecords();
 
-      if (mode === "ABSENT") {
-        const checkedSet = new Set(state.attendees.map(a => a.reg));
-        const absentees = state.roster.filter(r => !checkedSet.has(r.reg) && (r.name.toLowerCase().includes(q) || r.reg.toLowerCase().includes(q)));
-        if (absentees.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="6" class="empty-state">${state.roster.length === 0 ? "No class roster loaded yet. Click Class Roster to add students." : "No absent students found."}</td></tr>`;
-          return;
-        }
-        tbody.innerHTML = absentees.map((s, i) => `
+      const filtered = allRecords.filter(s => {
+        const matchesText = s.name.toLowerCase().includes(query) || s.reg.toLowerCase().includes(query);
+        const matchesStatus = filter === "ALL" || s.status === filter;
+        return matchesText && matchesStatus;
+      });
+
+      document.getElementById("presentCount").textContent = state.attendees.length;
+      const absentCount = allRecords.filter(r => r.status === "Absent").length;
+      document.getElementById("absentSummary").textContent = state.roster.length > 0 ? ` • ${absentCount} absent` : "";
+
+      const tbody = document.getElementById("attendanceBody");
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="empty-state">No matching attendance records yet.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map((s, i) => {
+        const badgeClass = s.status === "Late" ? "badge-late" : (s.status === "Absent" ? "badge-absent" : "badge-present");
+        const actionBtn = s.status === "Absent"
+          ? `<span style="color:var(--muted); font-size:0.8rem;">Not checked in</span>`
+          : `<button class="btn-danger" style="padding:4px 9px; font-size:0.78rem;" onclick="removeStudent('${s.reg}')">Remove</button>`;
+        return `
           <tr>
             <td>${i + 1}</td>
             <td><strong>${s.reg}</strong></td>
             <td>${s.name}</td>
-            <td>—</td>
-            <td><span class="badge badge-absent">Absent</span></td>
-            <td>—</td>
+            <td>${s.time}</td>
+            <td><span class="badge ${badgeClass}">${s.status}</span></td>
+            <td>${actionBtn}</td>
           </tr>
-        `).join("");
-        return;
-      }
-
-      const filtered = state.attendees.filter(s => s.name.toLowerCase().includes(q) || s.reg.toLowerCase().includes(q));
-      if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="empty-state">No students have checked in yet.</td></tr>`;
-        return;
-      }
-
-      tbody.innerHTML = filtered.map((s, i) => `
-        <tr>
-          <td>${i + 1}</td>
-          <td><strong>${s.reg}</strong></td>
-          <td>${s.name}</td>
-          <td>${s.time}</td>
-          <td><span class="badge ${s.status === "Late" ? "badge-late" : "badge-present"}">${s.status}</span></td>
-          <td><button class="btn-danger" style="padding:4px 9px; font-size:0.76rem;" onclick="removeStudent('${s.reg}')">Remove</button></td>
-        </tr>
-      `).join("");
+        `;
+      }).join("");
     }
 
     function renderAll() {
@@ -997,28 +1124,29 @@
       document.getElementById("displayTime").textContent = state.timeWindow;
       document.getElementById("displayCode").textContent = state.sessionCode;
       document.getElementById("displayRoom").textContent = `Room: ${state.room}`;
-      document.getElementById("rosterCount").textContent = state.roster.length;
+      document.getElementById("rosterCountBtn").textContent = state.roster.length;
 
       const cloudBadge = document.getElementById("cloudStatusBadge");
-      if (getCleanDbUrl()) {
-        cloudBadge.textContent = "Cloud Sync Live";
-        cloudBadge.classList.remove("cloud-off");
+      if (state.firebaseUrl) {
+        cloudBadge.textContent = "Cloud Synced";
+        cloudBadge.className = "pill";
       } else {
         cloudBadge.textContent = "Local Mode";
-        cloudBadge.classList.add("cloud-off");
+        cloudBadge.className = "pill warn";
       }
 
       const badge = document.getElementById("sessionStatusBadge");
       const endBtn = document.getElementById("endSessionBtn");
       const submitBtn = document.getElementById("submitCheckinBtn");
+
       if (state.isOpen) {
         badge.textContent = "Session Open";
-        badge.classList.remove("closed");
+        badge.className = "pill";
         endBtn.textContent = "End session";
         submitBtn.disabled = false;
       } else {
         badge.textContent = "Session Closed";
-        badge.classList.add("closed");
+        badge.className = "pill closed";
         endBtn.textContent = "Reopen session";
         submitBtn.disabled = true;
       }
@@ -1029,11 +1157,8 @@
     applyUrlParams();
     rotateQrCode(false);
     startQrTimer();
+    startCloudPolling();
     renderAll();
-    if (getCleanDbUrl()) {
-      syncFromFirebase();
-      setInterval(syncFromFirebase, 4000);
-    }
   </script>
 </body>
 </html>
