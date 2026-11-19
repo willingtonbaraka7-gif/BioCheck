@@ -800,7 +800,8 @@
 
     function saveRoster() {
       const raw = document.getElementById("rosterTextarea").value.trim();
-      const lines = raw ? raw.split(/?
+      const lines = raw ? raw.split(/
+?
 /) : [];
       const parsed = [];
       for (const line of lines) {
