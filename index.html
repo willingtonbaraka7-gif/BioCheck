@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BioCheck | MMUST Attendance</title>
+  <script src="https://unpkg.com"></script>
   <style>
     :root {
       --bg: #f4f7f6; --surface: #ffffff; --primary: #0f766e; --primary-dark: #115e59;
@@ -51,10 +52,16 @@
     .qr-box {
       background: #fff; padding: 12px; border-radius: 10px; margin-bottom: 10px;
       border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
-      width: 224px; height: 224px;
+      width: 234px; height: 234px;
     }
-    #qrImage { width: 200px; height: 200px; display: block; object-fit: contain; }
+    #qrImage { width: 210px; height: 210px; display: block; object-fit: contain; }
     .timer-text { font-size: 0.84rem; color: var(--primary-dark); font-weight: 700; margin-top: 4px; }
+    .scanner-box {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+      padding: 14px; margin-bottom: 16px;
+    }
+    #reader { width: 100%; border-radius: 9px; overflow: hidden; margin-top: 10px; }
+    #scanStatus { font-size: 0.85rem; font-weight: 700; margin-top: 8px; color: var(--primary-dark); }
     .btn-group { display: flex; flex-wrap: wrap; gap: 8px; }
     button {
       cursor: pointer; border: none; border-radius: 9px; padding: 9px 14px;
@@ -119,10 +126,11 @@
 
     <section class="hero">
       <h1>Check in. Learn. Keep moving.</h1>
-      <p>Secure QR attendance for Medical Biotechnology Year 1. Scan the QR code on screen, enter your MMUST registration number, and your attendance is recorded live.</p>
+      <p>Secure QR attendance for Medical Biotechnology Year 1. Scan the live QR code with the built-in scanner, enter your MMUST registration number, and your attendance is recorded instantly.</p>
     </section>
 
     <div class="grid">
+      <!-- Lecturer QR Display Card -->
       <div class="card">
         <div class="eyebrow">Current class • Live QR Generator</div>
         <h2 id="displayClassName">Medical Biotechnology Year 1</h2>
@@ -136,43 +144,33 @@
 
         <div class="qr-wrapper">
           <div class="qr-box">
-            <img id="qrImage" alt="Scan QR Code to Check In" />
+            <img id="qrImage" alt="Scan Attendance QR Code" />
           </div>
-          <p style="font-size:0.88rem; font-weight:600;">Scan this QR code with your phone camera to check in.</p>
+          <p style="font-size:0.88rem; font-weight:600;">Project this QR code for students to scan.</p>
           <p class="timer-text" id="qrTimerText">Code rotates in 45s • Token: #----</p>
           <a id="downloadQrLink" class="btn-secondary" style="display:inline-block; text-decoration:none; margin-top:8px; font-size:0.8rem; padding:6px 11px; border-radius:9px; font-weight:600;" target="_blank" download="BioCheck_QR.png">Open / Save QR Image</a>
         </div>
 
         <div class="btn-group">
-          <button class="btn-secondary" onclick="requirePin(() => rotateQrCode(true))">Refresh code</button>
+          <button class="btn-secondary" onclick="requirePin(() => updateQRCode(true))">Refresh code</button>
           <button class="btn-danger" id="endSessionBtn" onclick="requirePin(() => toggleSessionState())">End session</button>
         </div>
       </div>
 
+      <!-- Student QR Scanner & Check-In Card -->
       <div class="card">
-        <div class="eyebrow">Student check-in</div>
-        <h2>Confirm Your Attendance</h2>
-        <p style="font-size:0.88rem; color:var(--muted); margin:4px 0 14px;">
-          Enter your MMUST registration number after scanning the QR code on screen.
+        <div class="eyebrow">QR Scanner</div>
+        <h2>Scan Attendance QR</h2>
+        <p style="font-size:0.86rem; color:var(--muted); margin:4px 0 12px;">
+          Tap <strong>Start Scanner</strong> to scan the QR code on the projector screen, or enter the 4-digit token below.
         </p>
 
-        <form id="checkinForm" onsubmit="handleStudentCheckin(event)">
-          <div class="form-group">
-            <label for="regNumber">MMUST Registration Number</label>
-            <input type="text" id="regNumber" placeholder="e.g. MBT/B/01-01234/2026" oninput="autoFillStudentName()" required />
-            <div class="hint">Format: MBT/B/01-XXXXX/2026 or SBT/B/01-XXXXX/2026</div>
+        <div class="scanner-box">
+          <div class="btn-group">
+            <button type="button" class="btn-primary" onclick="startScanner()">Start Scanner</button>
+            <button type="button" class="btn-secondary" onclick="stopScanner()">Stop Scanner</button>
           </div>
-
-          <div class="form-group">
-            <label for="studentName">Full Name</label>
-            <input type="text" id="studentName" placeholder="e.g. Jane Wanjiku" required />
-          </div>
-
-          <div class="form-group">
-            <label for="tokenInput">Live QR Security Token</label>
-            <input type="text" id="tokenInput" placeholder="Auto-filled on scan or enter 4-digit code" required />
-          </div>
-
-          <button type="submit" id="submitCheckinBtn" class="btn-primary" style="width:100%;">Confirm attendance</button>
-        </form>
+          <div id="reader"></div>
+          <div id="scanStatus"></div>
+        </div>
 
