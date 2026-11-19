@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BioCheck | MMUST Attendance</title>
+  <style>
+    :root {
+      --bg: #f4f7f6;
+      --surface: #ffffff;
+      --primary: #0f766e;
+      --primary-dark: #115e59;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --success-bg: #dcfce7;
+      --success-text: #166534;
+      --warn-bg: #fef3c7;
+      --warn-text: #92400e;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+    body { background: var(--bg); color: var(--text); line-height: 1.5; padding: 18px; }
+    .container { max-width: 1120px; margin: 0 auto; }
+
+    header {
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+      gap: 14px; background: var(--surface); padding: 16px 22px; border-radius: var(--radius);
+      border: 1px solid var(--border); margin-bottom: 20px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .logo-badge {
+      width: 42px; height: 42px; border-radius: 10px; background: var(--primary);
+      color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 20px;
+    }
+    .brand h2 { font-size: 1.2rem; }
+    .brand p { font-size: 0.85rem; color: var(--muted); }
+    .header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+    .pill {
+      padding: 6px 12px; border-radius: 999px; font-size: 0.78rem; font-weight: 700;
+      background: var(--success-bg); color: var(--success-text);
+    }
+    .pill.closed { background: var(--danger-bg); color: var(--danger); }
+    .pill.cloud-off { background: var(--warn-bg); color: var(--warn-text); }
+
+    .hero {
+      background: linear-gradient(135deg, #0f766e, #0d9488); color: #fff;
+      padding: 24px 28px; border-radius: var(--radius); margin-bottom: 22px;
+    }
+    .hero h1 { font-size: 1.7rem; margin-bottom: 6px; }
+    .hero p { opacity: 0.95; max-width: 720px; font-size: 0.95rem; }
+
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-bottom: 22px; }
+    @media (max-width: 840px) { .grid { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 22px;
+    }
+    .eyebrow { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--primary); font-weight: 700; }
+    .card h2 { font-size: 1.2rem; margin-top: 2px; }
+
+    .meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 16px; font-size: 0.85rem; }
+    .meta-tag { background: var(--bg); padding: 5px 10px; border-radius: 8px; border: 1px solid var(--border); font-weight: 600; }
+
+    .qr-wrapper {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: var(--bg); border: 1px dashed #cbd5e1; border-radius: 12px;
+      padding: 18px; margin-bottom: 16px; text-align: center;
+    }
+    #qrCanvas {
+      background: #fff; padding: 10px; border-radius: 10px;
+      border: 1px solid var(--border); margin-bottom: 10px;
+      width: 210px; height: 210px; image-rendering: pixelated;
+    }
+    .timer-text { font-size: 0.82rem; color: var(--muted); font-weight: 600; margin-top: 4px; }
+    .scan-url-box {
+      font-size: 0.74rem; color: var(--muted); word-break: break-all;
+      background: #fff; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border);
+      margin-top: 8px; max-width: 100%;
+    }
+
+    .btn-group { display: flex; flex-wrap: wrap; gap: 8px; }
+    button {
+      cursor: pointer; border: none; border-radius: 9px; padding: 9px 14px;
+      font-size: 0.88rem; font-weight: 600; transition: 0.15s ease;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: #e2e8f0; }
+    .btn-danger { background: var(--danger-bg); color: var(--danger); }
+    .btn-danger:hover { background: #fecaca; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .form-group { margin-bottom: 13px; }
+    label { display: block; font-size: 0.84rem; font-weight: 600; margin-bottom: 4px; }
+    input, select, textarea {
+      width: 100%; padding: 10px 12px; border: 1px solid var(--border);
+      border-radius: 9px; font-size: 0.94rem; outline: none; font-family: inherit;
+    }
+    input:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12); }
+    .hint { font-size: 0.78rem; color: var(--muted); margin-top: 3px; }
+
+    .alert {
+      padding: 10px 13px; border-radius: 9px; font-size: 0.86rem; margin-top: 12px; display: none; font-weight: 500;
+    }
+    .alert.error { display: block; background: var(--danger-bg); color: var(--danger); }
+    .alert.success { display: block; background: var(--success-bg); color: var(--success-text); }
+    .alert.info { display: block; background: var(--warn-bg); color: var(--warn-text); }
+
+    .toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .search-box { max-width: 240px; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    th, td { text-align: left; padding: 11px 12px; border-bottom: 1px solid var(--border); }
+    th { background: var(--bg); font-weight: 700; color: var(--muted); font-size: 0.76rem; text-transform: uppercase; }
+    .badge { padding: 3px 9px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; }
+    .badge-present { background: var(--success-bg); color: var(--success-text); }
+    .badge-late { background: var(--warn-bg); color: var(--warn-text); }
+    .badge-absent { background: var(--danger-bg); color: var(--danger); }
+    .empty-state { text-align: center; padding: 26px; color: var(--muted); }
+
+    .modal-backdrop {
+      position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55);
+      display: none; align-items: center; justify-content: center; padding: 16px; z-index: 50;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal { background: #fff; width: 100%; max-width: 500px; border-radius: var(--radius); padding: 22px; max-height: 92vh; overflow-y: auto; }
+    .modal h3 { margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo-badge">✓</div>
+        <div>
+          <h2>BioCheck</h2>
+          <p>MMUST Medical Biotechnology • Attendance made simple</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <span id="cloudStatusBadge" class="pill cloud-off">Local Mode</span>
+        <span id="sessionStatusBadge" class="pill">Session Open</span>
+        <button class="btn-secondary" onclick="requirePin(() => openRosterModal())">Class Roster (<span id="rosterCount">0</span>)</button>
+        <button class="btn-secondary" onclick="requirePin(() => openCloudModal())">Cloud Sync</button>
+        <button class="btn-secondary" onclick="requirePin(() => openSessionModal())">Edit Session</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <h1>Check in. Learn. Keep moving.</h1>
+      <p>Secure QR attendance for Medical Biotechnology Year 1. Scan the live class QR code, enter your MMUST registration number, and your attendance is verified and recorded.</p>
+    </section>
+
+    <div class="grid">
+      <!-- QR Code Generator Card -->
+      <div class="card">
+        <div class="eyebrow">Current class • Live QR Generator</div>
+        <h2 id="displayClassName">Medical Biotechnology Year 1</h2>
+
+        <div class="meta-row">
+          <span class="meta-tag" id="displayDate">Today</span>
+          <span class="meta-tag" id="displayTime">09:00–10:00</span>
+          <span class="meta-tag" id="displayCode">BIO-7124</span>
+          <span class="meta-tag" id="displayRoom">Room: LBB 04</span>
+        </div>
+
+        <div class="qr-wrapper">
+          <canvas id="qrCanvas" width="210" height="210"></canvas>
+          <p style="font-size:0.88rem; font-weight:600;">Scan this QR code with any phone camera to sign in.</p>
+          <p class="timer-text" id="qrTimerText">Code rotates in 45s • Token: #0000</p>
+          <div class="scan-url-box" id="scanUrlText"></div>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn-secondary" onclick="requirePin(() => rotateQrCode(true))">Refresh code</button>
+          <button class="btn-secondary" onclick="downloadQrPng()">Download QR PNG</button>
+          <button class="btn-danger" id="endSessionBtn" onclick="requirePin(() => toggleSessionState())">End session</button>
+        </div>
+      </div>
+
+      <!-- Student Check-In Card -->
+      <div class="card">
+        <div class="eyebrow">Student check-in</div>
+        <h2>Confirm Your Attendance</h2>
+        <p style="font-size:0.88rem; color:var(--muted); margin:4px 0 14px;">
+          Enter your MMUST registration number after scanning the QR code on screen.
+        </p>
+
+        <form id="checkinForm" onsubmit="handleStudentCheckin(event)">
+          <div class="form-group">
+            <label for="regNumber">MMUST Registration Number</label>
+            <input type="text" id="regNumber" placeholder="e.g. MBT/B/01-01234/2026" oninput="autoFillFromRoster()" required />
+            <div class="hint" id="rosterHint">Format: MBT/B/01-XXXXX/2026 or SBT/B/01-XXXXX/2026</div>
+          </div>
+
+          <div class="form-group">
+            <label for="studentName">Full Name</label>
+            <input type="text" id="studentName" placeholder="Auto-fills if on class roster" required />
+          </div>
+
+          <div class="form-group">
+            <label for="tokenInput">Live QR Security Token</label>
+            <input type="text" id="tokenInput" placeholder="Auto-filled on scan or enter 4-digit code" required />
+          </div>
+
+          <button type="submit" id="submitCheckinBtn" class="btn-primary" style="width:100%;">Confirm attendance</button>
+        </form>
+
+        <div id="checkinAlert" class="alert"></div>
+      </div>
+    </div>
+
+    <!-- Live Attendance Tracker -->
+    <div class="card">
+      <div class="toolbar">
+        <div>
+          <div class="eyebrow">Live attendance</div>
+          <h2>Students checked in (<span id="presentCount">0</span> present)</h2>
+        </div>
+
+        <div class="btn-group">
+          <input type="text" id="searchInput" class="search-box" placeholder="Search name or reg no..." oninput="renderTable()" />
+          <select id="filterSelect" style="width:auto;" onchange="renderTable()">
+            <option value="ALL">All Checked-In</option>
+            <option value="ABSENT">Absent (From Roster)</option>
+          </select>
+          <button class="btn-secondary" onclick="requirePin(() => openManualAddModal())">+ Manual Add</button>
+          <button class="btn-primary" onclick="exportCSV()">Export CSV</button>
+          <button class="btn-danger" onclick="requirePin(() => clearAttendance())">Clear List</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Reg Number</th>
+              <th>Student Name</th>
+              <th>Time</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="attendanceBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Class Roster Modal -->
+  <div class="modal-backdrop" id="rosterModal">
+    <div class="modal">
+      <h3>Manage Class Roster</h3>
+      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:12px;">
+        Paste your student list below (one student per line as <strong>REG_NUMBER, FULL NAME</strong>). When a roster is loaded, names auto-fill and absent students can be tracked.
+      </p>
+      <div class="form-group">
+        <label>Student List (Format: MBT/B/01-01234/2026, Full Name)</label>
+        <textarea id="rosterTextarea" rows="8" placeholder="MBT/B/01-01234/2026, Student One&#10;MBT/B/01-01235/2026, Student Two"></textarea>
+      </div>
+      <div class="form-group">
+        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+          <input type="checkbox" id="restrictToRosterCheck" style="width:auto;" />
+          Only allow students listed on this roster to check in
+        </label>
+      </div>
+      <div class="btn-group" style="justify-content:space-between;">
+        <button class="btn-danger" onclick="clearRoster()">Clear Roster</button>
+        <div class="btn-group">
+          <button class="btn-secondary" onclick="closeModals()">Cancel</button>
+          <button class="btn-primary" onclick="saveRoster()">Save Roster</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Session Edit Modal -->
+  <div class="modal-backdrop" id="sessionModal">
+    <div class="modal">
+      <h3>Edit Session Details</h3>
+      <div class="form-group"><label>Class / Course Title</label><input type="text" id="editClassName" /></div>
+      <div class="form-group"><label>Time Window</label><input type="text" id="editTime" /></div>
+      <div class="form-group"><label>Session / Unit Code</label><input type="text" id="editCode" /></div>
+      <div class="form-group"><label>Lecture Room</label><input type="text" id="editRoom" /></div>
+      <div class="form-group"><label>Mark Late After (minutes)</label><input type="number" id="editLateMins" min="1" max="120" /></div>
+      <div class="form-group"><label>Change Lecturer PIN (4 digits)</label><input type="password" id="editPin" maxlength="4" placeholder="Leave blank to keep current" /></div>
+      <div class="btn-group" style="justify-content:flex-end;">
+        <button class="btn-secondary" onclick="closeModals()">Cancel</button>
+        <button class="btn-primary" onclick="saveSessionSettings()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cloud Sync Modal -->
+  <div class="modal-backdrop" id="cloudModal">
+    <div class="modal">
+      <h3>Firebase Live Cloud Sync</h3>
+      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:12px;">
+        Paste your free Firebase Realtime Database URL so phone scans appear live on your lecturer screen.
+      </p>
+      <div class="form-group">
+        <label>Firebase Realtime Database URL</label>
+        <input type="url" id="firebaseUrlInput" placeholder="https://your-project-default-rtdb.firebaseio.com" />
+      </div>
+      <div class="btn-group" style="justify-content:flex-end;">
+        <button class="btn-secondary" onclick="closeModals()">Cancel</button>
+        <button class="btn-primary" onclick="saveCloudSettings()">Save & Connect</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Manual Add Modal -->
+  <div class="modal-backdrop" id="manualModal">
+    <div class="modal">
+      <h3>Manual Lecturer Override</h3>
+      <div class="form-group"><label>MMUST Registration Number</label><input type="text" id="manualReg" placeholder="MBT/B/01-01234/2026" /></div>
+      <div class="form-group"><label>Student Full Name</label><input type="text" id="manualName" placeholder="Full Name" /></div>
+      <div class="form-group">
+        <label>Status</label>
+        <select id="manualStatus">
+          <option value="Present">Present</option>
+          <option value="Late">Late</option>
+        </select>
+      </div>
+      <div class="btn-group" style="justify-content:flex-end;">
+        <button class="btn-secondary" onclick="closeModals()">Cancel</button>
+        <button class="btn-primary" onclick="saveManualStudent()">Add Student</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ==========================================================================
+       EMBEDDED STANDALONE QR CODE GENERATOR (100% OFFLINE / ZERO DEPENDENCIES)
+       Implements ISO/IEC 18004 Byte-Mode QR Code Matrix Generation
+       ========================================================================== */
+    const QRGen = (() => {
+      const EXP = new Uint8Array(512), LOG = new Uint8Array(256);
+      let x = 1;
+      for (let i = 0; i < 255; i++) {
+        EXP[i] = x; LOG[x] = i;
+        x = (x << 1) ^ (x & 128 ? 0x11d : 0);
+      }
+      for (let i = 255; i < 512; i++) EXP[i] = EXP[i - 255];
+
+      const gfMul = (a, b) => (a && b) ? EXP[LOG[a] + LOG[b]] : 0;
+
+      function rsGenPoly(deg) {
+        let p = [1];
+        for (let i = 0; i < deg; i++) {
+          const next = new Array(p.length + 1).fill(0);
+          const factor = EXP[i];
+          for (let j = 0; j < p.length; j++) {
+            next[j] ^= p[j];
+            next[j + 1] ^= gfMul(p[j], factor);
+          }
+          p = next;
+        }
+        return p;
+      }
+
+      function rsEncode(data, ecLen) {
+        const gen = rsGenPoly(ecLen);
+        const rem = new Array(ecLen).fill(0);
+        for (const byte of data) {
+          const factor = byte ^ rem[0];
+          rem.shift();
+          rem.push(0);
+          for (let i = 0; i < ecLen; i++) rem[i] ^= gfMul(gen[i + 1], factor);
+        }
+        return rem;
+      }
+
+      // Version capacities (Byte mode, Error Correction Level L)
+      const VERSIONS = [
+        null,
+        { ver: 1, size: 21, total: 26, ec: 7, blocks: 1, align: [] },
+        { ver: 2, size: 25, total: 44, ec: 10, blocks: 1, align: [6, 18] },
+        { ver: 3, size: 29, total: 70, ec: 15, blocks: 1, align: [6, 22] },
+        { ver: 4, size: 33, total: 100, ec: 20, blocks: 1, align: [6, 26] },
+        { ver: 5, size: 37, total: 134, ec: 26, blocks: 1, align: [6, 30] },
+        { ver: 6, size: 41, total: 172, ec: 18, blocks: 2, align: [6, 34] },
+        { ver: 7, size: 45, total: 196, ec: 20, blocks: 2, align: [6, 22, 38] },
+        { ver: 8, size: 49, total: 242, ec: 24, blocks: 2, align: [6, 24, 42] },
+        { ver: 9, size: 53, total: 292, ec: 30, blocks: 2, align: [6, 26, 46] },
+        { ver: 10, size: 57, total: 346, ec: 18, blocks: 4, align: [6, 28, 50] }
+      ];
+
+      function buildMatrix(text) {
+        const bytes = new TextEncoder().encode(text);
+        let cfg = null;
+        for (let v = 1; v < VERSIONS.length; v++) {
+          const dataCap = VERSIONS[v].total - VERSIONS[v].ec * VERSIONS[v].blocks;
+          const headerBytes = v >= 10 ? 3 : 2;
+          if (bytes.length + headerBytes <= dataCap) { cfg = VERSIONS[v]; break; }
+        }
+        if (!cfg) cfg = VERSIONS[VERSIONS.length - 1];
+
+        const { ver, size, total, ec, blocks, align } = cfg;
+        const dataCap = total - ec * blocks;
+
+        // Build bitstream
+        const bits = [];
+        const pushBits = (val, len) => { for (let i = len - 1; i >= 0; i--) bits.push((val >> i) & 1); };
+        pushBits(0b0100, 4); // Byte mode
+        pushBits(bytes.length, ver >= 10 ? 16 : 8);
+        for (const b of bytes) pushBits(b, 8);
+        pushBits(0, Math.min(4, dataCap * 8 - bits.length));
+        while (bits.length % 8 !== 0) bits.push(0);
+
+        const codewords = [];
+        for (let i = 0; i < bits.length; i += 8) {
+          let byte = 0;
+          for (let j = 0; j < 8; j++) byte = (byte << 1) | bits[i + j];
+          codewords.push(byte);
+        }
+        const pads = [0xec, 0x11];
+        let pIdx = 0;
+        while (codewords.length < dataCap) { codewords.push(pads[pIdx++ % 2]); }
+
+        // Split into RS blocks & interleave
+        const baseLen = Math.floor(dataCap / blocks);
+        const extra = dataCap % blocks;
+        const dataBlocks = [], ecBlocks = [];
+        let offset = 0;
+        for (let b = 0; b < blocks; b++) {
+          const len = baseLen + (b >= blocks - extra ? 1 : 0);
+          const slice = codewords.slice(offset, offset + len);
+          offset += len;
+          dataBlocks.push(slice);
+          ecBlocks.push(rsEncode(slice, ec));
+        }
+
+        const finalBytes = [];
+        const maxDataLen = baseLen + (extra > 0 ? 1 : 0);
+        for (let i = 0; i < maxDataLen; i++) {
+          for (let b = 0; b < blocks; b++) if (i < dataBlocks[b].length) finalBytes.push(dataBlocks[b][i]);
+        }
+        for (let i = 0; i < ec; i++) {
+          for (let b = 0; b < blocks; b++) finalBytes.push(ecBlocks[b][i]);
+        }
+
+        // Initialize grid (-1 = unset, 0 = white, 1 = black)
+        const grid = Array.from({ length: size }, () => new Int8Array(size).fill(-1));
+        const isFunc = Array.from({ length: size }, () => new Uint8Array(size));
+
+        const setFunc = (r, c, val) => {
+          if (r >= 0 && r < size && c >= 0 && c < size) { grid[r][c] = val; isFunc[r][c] = 1; }
+        };
+
+        // Finder patterns
+        const drawFinder = (r0, c0) => {
+          for (let dr = -1; dr <= 7; dr++) {
+            for (let dc = -1; dc <= 7; dc++) {
+              const inBox = dr >= 0 && dr <= 6 && dc >= 0 && dc <= 6;
+              const onBorder = dr === 0 || dr === 6 || dc === 0 || dc === 6;
+              const inCenter = dr >= 2 && dr <= 4 && dc >= 2 && dc <= 4;
+              setFunc(r0 + dr, c0 + dc, inBox && (onBorder || inCenter) ? 1 : 0);
+            }
+          }
+        };
+        drawFinder(0, 0);
+        drawFinder(0, size - 7);
+        drawFinder(size - 7, 0);
+
+        // Alignment patterns
+        for (const r of align) {
+          for (const c of align) {
+            if (isFunc[r][c]) continue;
+            for (let dr = -2; dr <= 2; dr++) {
+              for (let dc = -2; dc <= 2; dc++) {
+                const val = Math.abs(dr) === 2 || Math.abs(dc) === 2 || (dr === 0 && dc === 0) ? 1 : 0;
+                setFunc(r + dr, c + dc, val);
+              }
+            }
+          }
+        }
+
+        // Timing patterns
+        for (let i = 8; i < size - 8; i++) {
+          if (!isFunc[6][i]) setFunc(6, i, i % 2 === 0 ? 1 : 0);
+          if (!isFunc[i][6]) setFunc(i, 6, i % 2 === 0 ? 1 : 0);
+        }
+
+        // Reserve format info & dark module
+        setFunc(size - 8, 8, 1);
+        for (let i = 0; i < 9; i++) {
+          if (!isFunc[8][i]) setFunc(8, i, 0);
+          if (!isFunc[i][8]) setFunc(i, 8, 0);
+        }
+        for (let i = 0; i < 8; i++) {
+          if (!isFunc[8][size - 1 - i]) setFunc(8, size - 1 - i, 0);
+          if (!isFunc[size - 1 - i][8]) setFunc(size - 1 - i, 8, 0);
+        }
+
+        // Version info for ver >= 7
+        if (ver >= 7) {
+          const VER_BITS = { 7: 0x07c94, 8: 0x085bc, 9: 0x09a99, 10: 0x0a4d3 };
+          const vBits = VER_BITS[ver];
+          for (let i = 0; i < 18; i++) {
+            const bit = (vBits >> i) & 1;
+            const r = Math.floor(i / 3), c = size - 11 + (i % 3);
+            setFunc(r, c, bit);
+            setFunc(c, r, bit);
+          }
+        }
+
+        // Place data bits with mask 0 ((r + c) % 2 === 0)
+        let bitIdx = 0;
+        const totalBits = finalBytes.length * 8;
+        let up = true;
+        for (let col = size - 1; col >= 1; col -= 2) {
+          if (col === 6) col--;
+          for (let step = 0; step < size; step++) {
+            const r = up ? size - 1 - step : step;
+            for (let dx = 0; dx < 2; dx++) {
+              const c = col - dx;
+              if (!isFunc[r][c]) {
+                let bit = 0;
+                if (bitIdx < totalBits) {
+                  bit = (finalBytes[bitIdx >> 3] >> (7 - (bitIdx & 7))) & 1;
+                  bitIdx++;
+                }
+                if ((r + c) % 2 === 0) bit ^= 1;
+                grid[r][c] = bit;
+              }
+            }
+          }
+          up = !up;
+        }
+
+        // Format info for Level L (01), Mask 0 (000) -> 0x77c4
+        const fmt = 0x77c4;
+        for (let i = 0; i < 15; i++) {
+          const bit = (fmt >> i) & 1;
+          if (i < 6) grid[8][i] = bit;
+          else if (i < 8) grid[8][i + 1] = bit;
+          else grid[8][size - 15 + i] = bit;
+
+          if (i < 8) grid[size - 1 - i][8] = bit;
+          else if (i < 9) grid[15 - i][8] = bit;
+          else grid[14 - i][8] = bit;
+        }
+
+        return grid;
+      }
+
+      function renderToCanvas(canvas, text) {
+        const matrix = buildMatrix(text);
+        const n = matrix.length;
+        const quiet = 3;
+        const total = n + quiet * 2;
+        const pxSize = 210;
+        canvas.width = pxSize;
+        canvas.height = pxSize;
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, pxSize, pxSize);
+        const scale = pxSize / total;
+        ctx.fillStyle = "#0f172a";
+        for (let r = 0; r < n; r++) {
+          for (let c = 0; c < n; c++) {
+            if (matrix[r][c] === 1) {
+              ctx.fillRect(Math.floor((c + quiet) * scale), Math.floor((r + quiet) * scale), Math.ceil(scale), Math.ceil(scale));
+            }
+          }
+        }
+      }
+
+      return { renderToCanvas };
+    })();
+
+    /* ==========================================================================
+       BIOCHECK ATTENDANCE APPLICATION LOGIC
+       ========================================================================== */
+    const STORAGE_KEY = "biocheck_mmust_roster_v3";
+
+    let state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+      className: "Medical Biotechnology Year 1",
+      timeWindow: "09:00–10:00",
+      sessionCode: "BIO-7124",
+      room: "LBB 04",
+      isOpen: true,
+      pin: "1234",
+      lateThresholdMins: 15,
+      sessionStartedAt: Date.now(),
+      firebaseUrl: "",
+      restrictToRoster: false,
+      roster: [], // Array of { reg: "MBT/B/01-XXXXX/2026", name: "Full Name" }
+      attendees: []
+    };
+
+    let currentToken = "";
+    let countdown = 45;
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function getCleanDbUrl() {
+      return state.firebaseUrl ? state.firebaseUrl.trim().replace(/\/+$/, "") : "";
+    }
+
+    function buildScanUrl() {
+      const base = window.location.href.split("?")[0];
+      const params = new URLSearchParams();
+      params.set("s", state.sessionCode);
+      params.set("t", currentToken);
+      const db = getCleanDbUrl();
+      if (db) params.set("db", db);
+      return `${base}?${params.toString()}`;
+    }
+
+    function rotateQrCode(manual = false) {
+      currentToken = Math.floor(1000 + Math.random() * 9000).toString();
+      countdown = 45;
+      const scanUrl = buildScanUrl();
+      QRGen.renderToCanvas(document.getElementById("qrCanvas"), scanUrl);
+      document.getElementById("qrTimerText").textContent = `Code rotates in ${countdown}s • Token: #${currentToken}`;
+      document.getElementById("scanUrlText").textContent = scanUrl;
+      if (manual) showAlert("QR code and security token refreshed.", "info");
+    }
+
+    function downloadQrPng() {
+      const canvas = document.getElementById("qrCanvas");
+      const link = document.createElement("a");
+      link.download = `${state.sessionCode}_QR_${currentToken}.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    }
+
+    function startQrTimer() {
+      setInterval(() => {
+        if (!state.isOpen) return;
+        countdown--;
+        if (countdown <= 0) {
+          rotateQrCode(false);
+        } else {
+          document.getElementById("qrTimerText").textContent = `Code rotates in ${countdown}s • Token: #${currentToken}`;
+        }
+      }, 1000);
+    }
+
+    function applyUrlParams() {
+      const params = new URLSearchParams(window.location.search);
+      const tokenParam = params.get("t");
+      const sessionParam = params.get("s");
+      const dbParam = params.get("db");
+
+      if (sessionParam) state.sessionCode = sessionParam.toUpperCase();
+      if (tokenParam) document.getElementById("tokenInput").value = tokenParam;
+      if (dbParam && !state.firebaseUrl) {
+        state.firebaseUrl = dbParam;
+        saveState();
+      }
+    }
+
+    function validateMmustReg(reg) {
+      return /^[A-Z]{3}\/[A-Z]\/\d{2}-\d{4,6}\/\d{4}$/i.test(reg.trim());
+    }
+
+    function autoFillFromRoster() {
+      const reg = document.getElementById("regNumber").value.trim().toUpperCase();
+      const match = state.roster.find(r => r.reg === reg);
+      const nameInput = document.getElementById("studentName");
+      const hint = document.getElementById("rosterHint");
+      if (match) {
+        nameInput.value = match.name;
+        hint.textContent = `Verified on class roster: ${match.name}`;
+        hint.style.color = "#166534";
+      } else {
+        hint.textContent = "Format: MBT/B/01-XXXXX/2026 or SBT/B/01-XXXXX/2026";
+        hint.style.color = "";
+      }
+    }
+
+    async function pushToFirebase(record) {
+      const db = getCleanDbUrl();
+      if (!db) return;
+      const safeKey = record.reg.replace(/[.#$\[\]\/]/g, "_");
+      const endpoint = `${db}/biocheck/${encodeURIComponent(state.sessionCode)}/${safeKey}.json`;
+      await fetch(endpoint, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(record)
+      });
+    }
+
+    async function syncFromFirebase() {
+      const db = getCleanDbUrl();
+      if (!db) return;
+      try {
+        const res = await fetch(`${db}/biocheck/${encodeURIComponent(state.sessionCode)}.json`);
+        if (!res.ok) return;
+        const data = await res.json();
+        state.attendees = data ? Object.values(data).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)) : [];
+        saveState();
+        renderTable();
+      } catch (err) {
+        console.warn("Cloud sync error:", err);
+      }
+    }
+
+    async function handleStudentCheckin(e) {
+      e.preventDefault();
+      if (!state.isOpen) return showAlert("This attendance session is closed.", "error");
+
+      const lockKey = `biocheck_lock_${state.sessionCode}_${state.sessionStartedAt}`;
+      if (localStorage.getItem(lockKey)) {
+        return showAlert("Device locked: Attendance already submitted from this browser.", "error");
+      }
+
+      const reg = document.getElementById("regNumber").value.trim().toUpperCase();
+      const name = document.getElementById("studentName").value.trim();
+      const token = document.getElementById("tokenInput").value.trim();
+      const urlToken = new URLSearchParams(window.location.search).get("t");
+
+      if (!validateMmustReg(reg)) {
+        return showAlert("Invalid MMUST registration format (e.g. MBT/B/01-01234/2026).", "error");
+      }
+
+      if (state.roster.length > 0 && state.restrictToRoster) {
+        const onRoster = state.roster.some(r => r.reg === reg);
+        if (!onRoster) {
+          return showAlert("Registration number not found on the official class roster.", "error");
+        }
+      }
+
+      if (token !== currentToken && (!urlToken || token !== urlToken)) {
+        return showAlert("Invalid or expired QR token. Scan the live QR code on screen.", "error");
+      }
+
+      if (state.attendees.some(s => s.reg === reg)) {
+        return showAlert(`${reg} has already checked in.`, "error");
+      }
+
+      const elapsedMins = (Date.now() - state.sessionStartedAt) / 60000;
+      const status = elapsedMins > state.lateThresholdMins ? "Late" : "Present";
+
+      const record = {
+        reg,
+        name,
+        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" }),
+        status,
+        timestamp: Date.now()
+      };
+
+      state.attendees.unshift(record);
+      localStorage.setItem(lockKey, reg);
+      saveState();
+      renderAll();
+      document.getElementById("checkinForm").reset();
+
+      if (getCleanDbUrl()) {
+        await pushToFirebase(record);
+        showAlert(`Synced & Confirmed! ${name} (${reg}) marked ${status}.`, "success");
+      } else {
+        showAlert(`Confirmed! ${name} (${reg}) marked ${status}.`, "success");
+      }
+    }
+
+    function showAlert(msg, type) {
+      const box = document.getElementById("checkinAlert");
+      box.textContent = msg;
+      box.className = `alert ${type}`;
+    }
+
+    function requirePin(cb) {
+      const entered = prompt("Enter 4-digit Lecturer PIN (default: 1234):");
+      if (entered === null) return;
+      if (entered === state.pin) cb();
+      else alert("Incorrect Lecturer PIN.");
+    }
+
+    function toggleSessionState() {
+      state.isOpen = !state.isOpen;
+      if (state.isOpen) {
+        state.sessionStartedAt = Date.now();
+        rotateQrCode(false);
+      }
+      saveState();
+      renderAll();
+    }
+
+    /* Roster Management */
+    function openRosterModal() {
+      document.getElementById("rosterTextarea").value = state.roster.map(r => `${r.reg}, ${r.name}`).join("
+");
+      document.getElementById("restrictToRosterCheck").checked = state.restrictToRoster;
+      document.getElementById("rosterModal").classList.add("open");
+    }
+
+    function saveRoster() {
+      const raw = document.getElementById("rosterTextarea").value.trim();
+      const lines = raw ? raw.split(/?
+/) : [];
+      const parsed = [];
+      for (const line of lines) {
+        const parts = line.split(/,|	/);
+        if (parts.length >= 2) {
+          const reg = parts[0].trim().toUpperCase();
+          const name = parts.slice(1).join(" ").trim();
+          if (reg && name) parsed.push({ reg, name });
+        }
+      }
+      state.roster = parsed;
+      state.restrictToRoster = document.getElementById("restrictToRosterCheck").checked;
+      saveState();
+      closeModals();
+      renderAll();
+    }
+
+    function clearRoster() {
+      if (confirm("Remove all students from the class roster?")) {
+        state.roster = [];
+        state.restrictToRoster = false;
+        saveState();
+        closeModals();
+        renderAll();
+      }
+    }
+
+    /* Session & Cloud Modals */
+    function openSessionModal() {
+      document.getElementById("editClassName").value = state.className;
+      document.getElementById("editTime").value = state.timeWindow;
+      document.getElementById("editCode").value = state.sessionCode;
+      document.getElementById("editRoom").value = state.room;
+      document.getElementById("editLateMins").value = state.lateThresholdMins;
+      document.getElementById("sessionModal").classList.add("open");
+    }
+
+    function saveSessionSettings() {
+      state.className = document.getElementById("editClassName").value.trim() || state.className;
+      state.timeWindow = document.getElementById("editTime").value.trim() || state.timeWindow;
+      state.sessionCode = document.getElementById("editCode").value.trim().toUpperCase() || state.sessionCode;
+      state.room = document.getElementById("editRoom").value.trim() || state.room;
+      state.lateThresholdMins = parseInt(document.getElementById("editLateMins").value, 10) || 15;
+      const newPin = document.getElementById("editPin").value.trim();
+      if (/^\d{4}$/.test(newPin)) state.pin = newPin;
+      saveState();
+      closeModals();
+      rotateQrCode(false);
+      renderAll();
+    }
+
+    function openCloudModal() {
+      document.getElementById("firebaseUrlInput").value = state.firebaseUrl;
+      document.getElementById("cloudModal").classList.add("open");
+    }
+
+    function saveCloudSettings() {
+      state.firebaseUrl = document.getElementById("firebaseUrlInput").value.trim();
+      saveState();
+      closeModals();
+      rotateQrCode(false);
+      renderAll();
+      if (getCleanDbUrl()) syncFromFirebase();
+    }
+
+    function openManualAddModal() {
+      document.getElementById("manualModal").classList.add("open");
+    }
+
+    async function saveManualStudent() {
+      const reg = document.getElementById("manualReg").value.trim().toUpperCase();
+      const name = document.getElementById("manualName").value.trim();
+      const status = document.getElementById("manualStatus").value;
+      if (!name || !validateMmustReg(reg)) return alert("Enter a valid name and MMUST registration number.");
+      if (state.attendees.some(s => s.reg === reg)) return alert("Student already checked in.");
+
+      const record = {
+        reg, name,
+        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" }),
+        status, timestamp: Date.now()
+      };
+      state.attendees.unshift(record);
+      saveState();
+      if (getCleanDbUrl()) await pushToFirebase(record);
+      closeModals();
+      renderAll();
+    }
+
+    async function removeStudent(reg) {
+      requirePin(async () => {
+        state.attendees = state.attendees.filter(s => s.reg !== reg);
+        saveState();
+        const db = getCleanDbUrl();
+        if (db) {
+          const safeKey = reg.replace(/[.#$\[\]\/]/g, "_");
+          await fetch(`${db}/biocheck/${encodeURIComponent(state.sessionCode)}/${safeKey}.json`, { method: "DELETE" });
+        }
+        renderAll();
+      });
+    }
+
+    async function clearAttendance() {
+      if (!confirm("Clear all checked-in students for this session?")) return;
+      state.attendees = [];
+      saveState();
+      const db = getCleanDbUrl();
+      if (db) await fetch(`${db}/biocheck/${encodeURIComponent(state.sessionCode)}.json`, { method: "DELETE" });
+      renderAll();
+    }
+
+    function closeModals() {
+      document.querySelectorAll(".modal-backdrop").forEach(m => m.classList.remove("open"));
+    }
+
+    function exportCSV() {
+      const checkedMap = new Map(state.attendees.map(a => [a.reg, a]));
+      const rows = [];
+
+      // Export checked-in students first
+      state.attendees.forEach(s => {
+        rows.push([s.reg, `"${s.name.replace(/"/g, '""')}"`, s.time, s.status, state.sessionCode, `"${state.className}"`]);
+      });
+
+      // Append absent roster students if a roster is loaded
+      state.roster.forEach(r => {
+        if (!checkedMap.has(r.reg)) {
+          rows.push([r.reg, `"${r.name.replace(/"/g, '""')}"`, "-", "Absent", state.sessionCode, `"${state.className}"`]);
+        }
+      });
+
+      if (rows.length === 0) return alert("No attendance or roster data to export.");
+
+      const headers = ["No", "Registration Number", "Student Name", "Check-In Time", "Status", "Session Code", "Class"];
+      const numberedRows = rows.map((r, i) => [i + 1, ...r].join(","));
+      const csv = [headers.join(","), ...numberedRows].join("
+");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${state.sessionCode}_Attendance_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function renderTable() {
+      const q = document.getElementById("searchInput").value.toLowerCase();
+      const mode = document.getElementById("filterSelect").value;
+      const tbody = document.getElementById("attendanceBody");
+      document.getElementById("presentCount").textContent = state.attendees.length;
+
+      if (mode === "ABSENT") {
+        const checkedSet = new Set(state.attendees.map(a => a.reg));
+        const absentees = state.roster.filter(r => !checkedSet.has(r.reg) && (r.name.toLowerCase().includes(q) || r.reg.toLowerCase().includes(q)));
+        if (absentees.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="6" class="empty-state">${state.roster.length === 0 ? "No class roster loaded yet. Click Class Roster to add students." : "No absent students found."}</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = absentees.map((s, i) => `
+          <tr>
+            <td>${i + 1}</td>
+            <td><strong>${s.reg}</strong></td>
+            <td>${s.name}</td>
+            <td>—</td>
+            <td><span class="badge badge-absent">Absent</span></td>
+            <td>—</td>
+          </tr>
+        `).join("");
+        return;
+      }
+
+      const filtered = state.attendees.filter(s => s.name.toLowerCase().includes(q) || s.reg.toLowerCase().includes(q));
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="empty-state">No students have checked in yet.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map((s, i) => `
+        <tr>
+          <td>${i + 1}</td>
+          <td><strong>${s.reg}</strong></td>
+          <td>${s.name}</td>
+          <td>${s.time}</td>
+          <td><span class="badge ${s.status === "Late" ? "badge-late" : "badge-present"}">${s.status}</span></td>
+          <td><button class="btn-danger" style="padding:4px 9px; font-size:0.76rem;" onclick="removeStudent('${s.reg}')">Remove</button></td>
+        </tr>
+      `).join("");
+    }
+
+    function renderAll() {
+      document.getElementById("displayClassName").textContent = state.className;
+      document.getElementById("displayDate").textContent = new Date().toLocaleDateString("en-KE", { weekday: "short", day: "numeric", month: "short", year: "numeric" });
+      document.getElementById("displayTime").textContent = state.timeWindow;
+      document.getElementById("displayCode").textContent = state.sessionCode;
+      document.getElementById("displayRoom").textContent = `Room: ${state.room}`;
+      document.getElementById("rosterCount").textContent = state.roster.length;
+
+      const cloudBadge = document.getElementById("cloudStatusBadge");
+      if (getCleanDbUrl()) {
+        cloudBadge.textContent = "Cloud Sync Live";
+        cloudBadge.classList.remove("cloud-off");
+      } else {
+        cloudBadge.textContent = "Local Mode";
+        cloudBadge.classList.add("cloud-off");
+      }
+
+      const badge = document.getElementById("sessionStatusBadge");
+      const endBtn = document.getElementById("endSessionBtn");
+      const submitBtn = document.getElementById("submitCheckinBtn");
+      if (state.isOpen) {
+        badge.textContent = "Session Open";
+        badge.classList.remove("closed");
+        endBtn.textContent = "End session";
+        submitBtn.disabled = false;
+      } else {
+        badge.textContent = "Session Closed";
+        badge.classList.add("closed");
+        endBtn.textContent = "Reopen session";
+        submitBtn.disabled = true;
+      }
+
+      renderTable();
+    }
+
+    applyUrlParams();
+    rotateQrCode(false);
+    startQrTimer();
+    renderAll();
+    if (getCleanDbUrl()) {
+      syncFromFirebase();
+      setInterval(syncFromFirebase, 4000);
+    }
+  </script>
+</body>
+</html>
